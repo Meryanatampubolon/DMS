@@ -27,10 +27,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     secret: process.env.SESSION_SECRET,
-  	cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
+    cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
     store: new SequelizeStore({
-    	db: sequelize,
-    	table: "sessions",
+        db: sequelize,
+        table: "sessions",
     }),
 }));
 
@@ -38,18 +38,18 @@ app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
-	res.locals.isAuthenticated = req.session.isLoggedIn;
-	res.locals.csrfToken = req.csrfToken();
-	next();
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
 });
 
 app.engine(
-	'hbs',
-	expressHbs({
-		layoutsDir: 'views/layouts/',
-		defaultLayout: 'web_layout',
-		extname: 'hbs'
-	})
+    'hbs',
+    expressHbs({
+        layoutsDir: 'views/layouts/',
+        defaultLayout: 'web_layout',
+        extname: 'hbs'
+    })
 );
 app.set('view engine', 'hbs');
 app.set('views', 'views');
@@ -57,14 +57,15 @@ app.set('views', 'views');
 app.use(webRoutes);
 app.use(errorController.pageNotFound);
 
+// kita matikan auto sync nya sequalize, sebagai gantinya kita pakai migration supaya sequalize juga bisa memanggil VIEW
 sequelize
-	//.sync({force : true})
-	.sync()
-	.then(() => {
-		app.listen(process.env.PORT);
-		//pending set timezone
-		console.log("App listening on port " + process.env.PORT);
-	})
-	.catch(err => {
-		console.log(err);
-	});
+    //.sync({ force: true })
+    .sync()
+    .then(() => {
+        app.listen(process.env.PORT);
+        //pending set timezone
+        console.log("App listening on port " + process.env.PORT);
+    })
+    .catch(err => {
+        console.log(err);
+    });
