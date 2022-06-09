@@ -57,15 +57,18 @@ app.set('views', 'views');
 app.use(webRoutes);
 app.use(errorController.pageNotFound);
 
-// kita matikan auto sync nya sequalize, sebagai gantinya kita pakai migration supaya sequalize juga bisa memanggil VIEW
-sequelize
-    //.sync({ force: true })
-    .sync()
-    .then(() => {
-        app.listen(process.env.PORT);
-        //pending set timezone
-        console.log("App listening on port " + process.env.PORT);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+// kita matikan auto sync all - nya sequalize, sebagai gantinya kita pakai db/init.js untuk memanggil menjalankan sync per model
+// tujuannya kalau nanti kita menggunakan VIEW, kita bisa langsung panggil lewat model tapi tidak perlu melewati proses sync-pembuatan tabel di database
+const dbinit = require('./db/init');
+
+//sequelize
+//.sync({ force: true })
+// .sync()
+//.then(() => {
+app.listen(process.env.PORT);
+//pending set timezone
+console.log("App listening on port " + process.env.PORT);
+    //})
+    //.catch(err => {
+    //    console.log(err);
+    //});

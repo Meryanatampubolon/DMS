@@ -8,7 +8,7 @@ const Session = sequelize.define("sessions", {
         type: DataTypes.STRING,
         primaryKey: true,
     },
-    uid: DataTypes.STRING,
+    userId: DataTypes.STRING,
     expires: DataTypes.DATE,
     data: DataTypes.TEXT,
 });

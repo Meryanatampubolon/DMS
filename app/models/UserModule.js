@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
-const UserModule = sequelize.define('user_module', {
+const UserModule = sequelize.define('userModules', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
