@@ -1,12 +1,6 @@
-# Ergon Agile NodeJS boilerplate
+# Node Web Application boilerplate
 
-Ini boiler plate Ergon Agile berbasis Node + Express +MySQL + Sequalize
-
-### Prerequisites
-
-1. ```NodeJs```
-2. ```NPM```
-3. ```MySQL```
+A boilerplate for **Node.js** web applications. 
 
 ### Quick start
 
@@ -26,6 +20,42 @@ Ini boiler plate Ergon Agile berbasis Node + Express +MySQL + Sequalize
 3. Untuk menjalankan migration: `npx sequelize-cli db:migrate`
 4. Untuk undo migration: `npx sequelize-cli db:migrate:undo`
 5. File SQL migration ada di folder `db\migrations`. Ada 2 file: `up.sql` dan `down.sql`
+
+
+### HOW TO GENERATE SELF SIGN CERTIFICATE
+```
+openssl genrsa -out key.pem
+openssl req -new -key key.pem -out csr.pem
+openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+```
+
+### APACHE VHOST
+```
+<VirtualHost *:80>
+    ServerName dev.ergonagile.id
+    # with optional timeout settings  
+#    ProxyPass / http://localhost:3000/ connectiontimeout=5 timeout=30
+#        ServerAdmin administrator@n-network.de
+        RewriteEngine On
+        RewriteCond %{HTTPS} off
+        RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+        RewriteRule ^ https://dev.ergonagile.id/%{REQUEST_URI} [P]
+</VirtualHost>
+
+<VirtualHost *:443>
+    SSLProxyEngine on
+    SSLProxyVerify none
+    SSLProxyCheckPeerCN off
+    SSLProxyCheckPeerName off
+    SSLProxyCheckPeerExpire off
+
+    ServerName dev.ergonagile.id
+    # with optional timeout settings  
+    ProxyPreserveHost On
+    ProxyPass / https://localhost:3001/ connectiontimeout=5 timeout=30
+    ProxyPassReverse / https://localhost:3001/
+</VirtualHost>
+```
 
 ### Folder Structure
 ```
@@ -53,6 +83,7 @@ Ini boiler plate Ergon Agile berbasis Node + Express +MySQL + Sequalize
 ├── .sequalizerc               # Sequalize migrations config
 └── package.json               # NPM Dependencies and scripts
 ```
+
 
 ### FORK OF
 https://github.com/mangya/node-express-mysql-boilerplate.git 
