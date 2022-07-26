@@ -4,6 +4,10 @@ const PageController = require('../app/controllers/PageController');
 const AuthController = require('../app/controllers/AuthController');
 const UserController = require('../app/controllers/admin/UserController');
 const ModuleController = require('../app/controllers/admin/ModuleController');
+const InstansiController = require('../app/controllers/admin/InstansiController');
+const DepartemenController = require('../app/controllers/admin/DepartemenController');
+
+
 
 
 const isAuth = require('../app/middlewares/isAuth');
@@ -18,8 +22,8 @@ router.get('/tentangkami',PageController.tentangkami)
 router.get('/login', AuthController.login);
 router.post('/login', AuthController.login);
 router.get('/logout', AuthController.logout);
-router.get('/sign-up', canRegister, AuthController.signUp);
-router.post('/sign-up', canRegister, AuthController.signUp);
+router.get('/sign-up', canRegister(), AuthController.signUp);
+router.post('/sign-up', canRegister(), AuthController.signUp);
 router.get('/forgot-password', AuthController.forgotPassword);
 router.post('/forgot-password', AuthController.forgotPassword);
 // ganti password default
@@ -46,16 +50,23 @@ router.post('/users-module-add', isAuth(), checkPermission('pm_admin'), UserCont
 router.get('/users-module-delete/:id', isAuth(), checkPermission('pm_admin'), UserController.moduleDelete);
 router.get('/users-password-reset/:userId', isAuth(), checkPermission('pm_admin'), UserController.passwordReset);
 
+router.get('/debug', isAuth(),checkPermission('pm_admin'), PageController.debug);
+router.get('/modules', isAuth(), checkPermission('pm_admin'), ModuleController.list);
+router.post('/modules-add', isAuth(), checkPermission('pm_admin'), ModuleController.add);
+router.get('/modules-delete/:userId/:moduleId', isAuth(), checkPermission('pm_admin'), ModuleController.delete);
+
+router.get('/instansi', isAuth(), checkPermission('pm_admin'), InstansiController.index);
+router.post('/instansi', isAuth(), checkPermission('pm_admin'), InstansiController.index);
 
 
+router.get('/bagian', isAuth(), checkPermission('pm_admin'), DepartemenController.list);
+router.get('/bagian-add', isAuth(), checkPermission('pm_admin'), DepartemenController.add);
+router.post('/bagian-add', isAuth(), checkPermission('pm_admin'), DepartemenController.add);
+router.get('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.edit);
+router.post('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.edit);
 
+router.get('/bagian-delete/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.delete);
 
-
-
-router.get('/debug', isAuth, checkPermission('pm_admin'), PageController.debug);
-router.get('/modules', isAuth, checkPermission('pm_admin'), ModuleController.list);
-router.post('/modules-add', isAuth, checkPermission('pm_admin'), ModuleController.add);
-router.get('/modules-delete/:userId/:moduleId', isAuth, checkPermission('pm_admin'), ModuleController.delete);
 
 
 

@@ -3,23 +3,24 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 const hlp = require('../helpers/helpers');
 
-const vUserModule = sequelize.define('view_userModules', {
+const vUserDepartemen = sequelize.define('view_userDepartemen', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true
     },
     userId: DataTypes.INTEGER,
-    moduleId: DataTypes.INTEGER,
-    moduleName: DataTypes.STRING
+    departemenId: DataTypes.INTEGER,
+    departemenName: DataTypes.STRING
 },
     {
         indexes: [
             {
-                fields: ['userId', 'moduleId']
+                fields: ['userId', 'departemenId']
             }],
-    });
+    }
+);
 
-const tUserModule = sequelize.define('userModules', {
+const tUserDepartemen = sequelize.define('userDepartemen', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -27,17 +28,18 @@ const tUserModule = sequelize.define('userModules', {
         primaryKey: true
     },
     userId: DataTypes.INTEGER,
-    moduleId: DataTypes.INTEGER,
+    departemenId: DataTypes.INTEGER,
 },
-    {
-        indexes: [
-            {
-                fields: ['userId', 'moduleId']
-            }],
-    }
+{
+    freezeTableName: true,
+    indexes: [
+        {
+            fields: ['userId', 'departemenId']
+        }],
+}
 );
 
-async function userModule_get(vars) {
+async function userDepartemen_get(vars) {
     //console.log(vars);
     // ini contoh query builder dengan sequalize
     let data = {
@@ -50,32 +52,32 @@ async function userModule_get(vars) {
     ('opt_where' in vars) ? data.where = vars.opt_where : null;
 
     ('userId' in vars) ? data.where.userId = vars.userId : null;
-    ('moduleId' in vars) ? data.where.moduleId = vars.moduleId : null;
+    ('departemenId' in vars) ? data.where.departemenId = vars.departemenId : null;
     //console.log(data);
-    let result = await vUserModule.findAll(data);
+    let result = await vUserDepartemen.findAll(data);
     return result;
 }
 
-async function userModule_add(vars) {
+async function userDepartemen_add(vars) {
     let data = {};
     ('userId' in vars) ? data.userId = vars.userId : null;
-    ('moduleId' in vars) ? data.moduleId = vars.moduleId : null;
+    ('departemenId' in vars) ? data.departemenId = vars.departemenId : null;
     if (hlp.ObjNotEmpty(data)) {
-        return await tUserModule.create(data);
+        return await tUserDepartemen.create(data);
     }
 
 }
 
-async function userModule_delete(vars) {
+async function userDepartemen_delete(vars) {
     let data = {};
     ('id' in vars) ? data.id = vars.id : null;
     ('userId' in vars) ? data.userId = vars.userId : null;
-    ('moduleId' in vars)  ? data.moduleId = vars.moduleId : null;
+    ('departemenId' in vars)  ? data.departemenId = vars.departemenId : null;
     if (hlp.ObjNotEmpty(data)) {
         console.log(data);
-        return await tUserModule.destroy({ where: data });
+        return await tUserDepartemen.destroy({ where: data });
     }
 }
 
 
-module.exports = { vUserModule, tUserModule, userModule_get, userModule_add, userModule_delete };
+module.exports = { vUserDepartemen, tUserDepartemen, userDepartemen_get, userDepartemen_add, userDepartemen_delete };

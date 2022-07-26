@@ -21,10 +21,13 @@ module.exports = Object.freeze({
     MY_DATADELETE: 'Data dihapus',
     MY_DATADELETECONFIRM: 'Hapus data?',
 
-    MY_DATAORTUUPDATE: 'Data Ortu berhasil diupdate',
-
     MY_DEFAULTPASSWORD: 'p4ssword',
 
-    MY_SITECANREGISTER: true
+    MY_SITECANREGISTER: true,
+
+    MY_INSTANSI_NAME: "Departemen Pendidikan",
+    MY_INSTANSI_ALAMAT: "JL.MERDEKA NO.1, JAKARTA",
+    
+
 });
 

@@ -1,36 +1,78 @@
 <li class="nav-item <%= (locals.menu_admin ? 'menu-is-opening menu-open' : '') %>">
     <a href="#" class="nav-link">
-      <i class="nav-icon fas  fa-gears"></i>
-      <p>
+        <i class="nav-icon fas  fa-gears"></i>
+        <p>
         Admin
         <i class="right fas fa-angle-left"></i>
-      </p>
+        </p>
     </a>
     <ul class="nav nav-treeview" <%- (locals.menu_admin ? 'style="display:block"' : 'style="display: none"') %> >
-      <li class="nav-item">
-        <a href="/users" class="nav-link">
-          <i class="far fa-user nav-icon"></i>
-          <p>User</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/modules" class="nav-link">
-          <i class="far fa-clipboard nav-icon"></i>
-          <p>Module</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/api" class="nav-link">
-          <i class="fa fa-paperclip nav-icon"></i>
-          <p>API</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/debug" class="nav-link">
-          <i class="fa fa-bug nav-icon"></i>
-          <p>Debug</p>
-        </a>
-      </li>
-      
+        <li class="nav-item">
+            <a href="/users" class="nav-link">
+                <i class="far fa-user nav-icon"></i>
+                <p>User</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/modules" class="nav-link">
+                <i class="far fa-clipboard nav-icon"></i>
+                <p>Module</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/api" class="nav-link">
+                <i class="fa fa-paperclip nav-icon"></i>
+                <p>API</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/debug" class="nav-link">
+                <i class="fa fa-bug nav-icon"></i>
+                <p>Debug</p>
+            </a>
+        </li>
+        
+    </ul>
+</li>
+<li class="nav-item <%= (locals.menu_pengaturan ? 'menu-is-opening menu-open' : '') %>">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-user-gear"></i>
+        <p>
+        Pengaturan aplikasi
+        <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview" <%- (locals.menu_pengaturan ? 'style="display:block"' : 'style="display: none"') %> >
+        <li class="nav-item">
+            <a href="/instansi" class="nav-link">
+                <i class="fa fa-building nav-icon"></i>
+                <p>Instansi</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/bagian" class="nav-link">
+                <i class="fa fa-users nav-icon"></i>
+                <p>Bagian</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/subbagian" class="nav-link">
+                <i class="fa fa-users-between-lines nav-icon"></i>
+                <p>Sub Bagian</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/user-akses" class="nav-link">
+                <i class="fa fa-user-check nav-icon"></i>
+                <p>Hak Akses User</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/user-akses" class="nav-link">
+                <i class="fa fa-clipboard-check  nav-icon"></i>
+                <p>Hak Akses Dokumen</p>
+            </a>
+        </li>
+        
     </ul>
 </li>

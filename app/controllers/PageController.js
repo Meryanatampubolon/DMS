@@ -1,3 +1,4 @@
+
 exports.pageNotFound = (req, res, next) => {
 
     let vars = {
@@ -34,7 +35,6 @@ exports.frontPage = (req, res, next) => {
 };
 
 exports.debug = (req, res, next) => {
-
     let vars = {
         pages: '../pages/debug',
         pageTitle: 'debug',
