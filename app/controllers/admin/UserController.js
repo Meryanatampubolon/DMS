@@ -213,3 +213,24 @@ exports.passwordReset = (req, res, next) => {
         return res.redirect('back');
     });
  };
+
+ exports.departemen_list =  (req, res, next) => {
+    User.user_get({})
+    .then(result => {
+
+        let breadcrumbs = {
+            Home: '/admin',
+            UserAkses: '#'
+        }
+
+        let vars = {
+            q_user : result,
+            defpassword  : hlp.md5(constant.MY_DEFAULTPASSWORD),
+            breadcrumbs : hlp.genBreadcrumbs(breadcrumbs),
+            menu_pengaturan : true,
+            pages: '../admin/user_list',
+            pageTitle: 'User List',
+        };
+        res.render('layouts/admin_layout', vars);
+    }); 
+}

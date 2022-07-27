@@ -9,9 +9,8 @@ exports.list = (req, res, next) => {
         Bagian: '#'
     }
     
-    Departemen.tDepartemen.findAll({raw: true})
+    Departemen.vDepartemen.findAll({raw: true})
     .then(result => {  
-
         let vars = {
             q_departemen: result,
             breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
@@ -70,12 +69,14 @@ exports.edit  =  (req, res, next) => {
         });
         
     } else {
-        Departemen.tDepartemen.findOne({where:{departemenId: req.params.departemenId}}).then(result =>{
+        const q1 = Departemen.tDepartemen.findOne({raw: true, where:{departemenId: req.params.departemenId}});
+        const q2 = Departemen.tDepartemen.findAll({raw: true, where:{departemenParentId: req.params.departemenId}});
+        Promise.all([q1, q2]).then(result => {
             let breadcrumbs = {
                 Home: '/admin',
                 Bagian: '/bagian',
                 Edit : '#'
-            }
+            };
         
             let vars = {
                 breadcrumbs : hlp.genBreadcrumbs(breadcrumbs),
@@ -84,22 +85,53 @@ exports.edit  =  (req, res, next) => {
                 pageTitle: 'Edit Bagian',
                 oldInput: hlp.oldInput(req),
                 edit: true,
-                q_departemen: result.dataValues
-    
+                q_departemen: result[0],
+                q_subdepartemen: result[1],    
             };
             res.render('layouts/admin_layout', vars);
-            
         });
+
 
     }
 }
-
 
 exports.delete = (req, res, next) => {   
     Departemen.tDepartemen.destroy({where: {departemenId: req.params.departemenId}})
     .then(result => {
         hlp.genAlert(req,{tipe: 'error',message:constant.MY_DATADELETE});
         return res.redirect('/bagian');
+    })
+    
+};
+
+exports.subbagian_add =  (req, res, next) => {
+    Departemen.tDepartemen.create({
+        departemenParentId: req.body.departemenParentId,
+        departemen: req.body.subdepartemen,
+        keterangan: req.body.subketerangan,
+    });
+    hlp.genAlert(req,{message: constant.MY_DATAINSERT});
+    return res.redirect('/bagian-edit/'+ req.body.departemenParentId);      
+}
+
+
+exports.subbagian_edit =  (req, res, next) => {
+    let data = {
+        departemenId: req.params.departemenId,
+        departemen: req.body.subdepartemen,
+        keterangan: req.body.subketerangan
+    }
+    Departemen.departemen_edit(data);
+    hlp.genAlert(req,{message: constant.MY_DATAEDITED});
+    return res.redirect('/bagian-edit/'+ req.body.departemenParentId);      
+}
+
+
+exports.subbagian_delete = (req, res, next) => {   
+    Departemen.tDepartemen.destroy({where: {departemenId: req.params.departemenId}})
+    .then(result => {
+        hlp.genAlert(req,{tipe: 'error',message:constant.MY_DATADELETE});
+        return res.redirect('/bagian-edit/'+req.params.departemenParentId);
     })
     
 };

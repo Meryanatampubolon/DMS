@@ -3,21 +3,22 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 const hlp = require('../helpers/helpers');
 
-const vDepartemen = sequelize.define('view_userDepartemen', {
+const vDepartemen = sequelize.define('view_departemen', {
     departemenId: {
         type: DataTypes.INTEGER,
         primaryKey: true
     },
-    departemenId: DataTypes.INTEGER,
-    departemenName: DataTypes.STRING,
+    departemen: DataTypes.STRING,
+    keterangan: DataTypes.STRING,
     departemenParentId: DataTypes.INTEGER,
-    departemenParentName: DataTypes.STRING,
+    subDepartemen: DataTypes.STRING,
 },
     {
-        indexes: [
-            {
-                fields: ['userId', 'departemenId', 'departemenParentId']
-            }],
+    freezeTableName: true,
+    indexes: [
+        {
+            fields: ['userId', 'departemenId', 'departemenParentId']
+        }],
     });
 
 const tDepartemen = sequelize.define('departemen', {

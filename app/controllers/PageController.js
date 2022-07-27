@@ -1,4 +1,6 @@
 
+const hlp = require('../helpers/helpers');
+
 exports.pageNotFound = (req, res, next) => {
 
     let vars = {
@@ -18,9 +20,53 @@ exports.adminPage = (req, res, next) => {
 };
 
 exports.aksesmenu = (req,res,next) =>{
-    console.log(req.params.menus)
+    let breadcrumbs = {}
+    if(req.params.menus == "dashboard")
+    {
+        breadcrumbs = {
+            Home:'#',
+            Dashboard:'#'
+        }
+    }
+    else if(req.params.menus == "AksesAdministrator")
+    {
+        breadcrumbs = {
+            Settinguser:'#',
+            AksesAdministrator:'#'
+        }
+    }
+    else if(req.params.menus == "Suratmasuk")
+    {
+        breadcrumbs = {
+            Dokumen: '#',
+            SuratMasuk:'#'
+        }
+    }
+    else if(req.params.menus == "Disposisi")
+    {
+        breadcrumbs = {
+            Dokumen: '#',
+            Disposisi:'#'
+        }
+    }
+    else if(req.params.menus == "Suratkeluar")
+    {
+        breadcrumbs = {
+            Dokumen: '#',
+            SuratKeluar:'#'
+        }
+    }
     let vars={
+        breadcrumbs : hlp.genBreadcrumbs(breadcrumbs),
         pages:'../pages/'+req.params.menus,
+        pageTitle:req.params.menus
+    }
+    res.render('layouts/admin_layout',vars);
+}
+exports.aksesmenu1 = (req,res,next) =>{
+    console.log(req);
+    let vars={
+        pages:'../pages/tentangkami',
         pageTitle:'tentangkami'
     }
     res.render('layouts/admin_layout',vars);

@@ -16,7 +16,7 @@
                         <% q_departemen.forEach(row => { %>
                         <tr>
                             <td><%= row.departemen %><br><p class="text-sm"><%= row.keterangan  %> </p></td>
-                            <td></td>
+                            <td><%= row.subDepartemen %> </td>
                             <td class="text-right">
                                 <a href="/bagian-edit/<%= row.departemenId %> " class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
                                 <a onClick="return confirm('<%= constant.MY_DATADELETECONFIRM %> ')" href="/bagian-delete/<%= row.departemenId %>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>

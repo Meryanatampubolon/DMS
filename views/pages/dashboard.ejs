@@ -1,9 +1,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
+        <h3>Halaman Dashboard</h3>
         <div class="card">
-            <div class="card-header">
-                <h3>Halaman Dashboard</h3>
-            </div>
             <div class="card-body">
                 <div class="d-flex col-md-12 col-sm-12">
                     <div class="card" style="margin-left: 2rem;">
@@ -87,29 +85,98 @@
                 <h3>Surat Tanggal Masuk</h3>
             </div>
             <div class="card-body">
-                <div class="col-md-12 col-sm-12">
-                    <table id="datamasuk" style="width: 100%; ">
+                <div class="mt-2">
+                    <table  class="table table-striped" id="datamasuk" style="width: 100%; ">
                         <thead>
                             <tr>
-                                <th style="border: 1px solid gray;">No</th>
-                                <th style="border: 1px solid gray;">Nomor Surat</th>
-                                <th style="border: 1px solid gray;">Asal Surat</th>
-                                <th style="border: 1px solid gray;">Tanggal Surat</th>
-                                <th style="border: 1px solid gray;">Isi Surat</th>
-                                <th style="border: 1px solid gray;">Status</th>
-                                <th style="border: 1px solid gray;">File</th>
-                                <th style="border: 1px solid gray;">Tampil</th>
+                                <th >No</th>
+                                <th >Nomor Surat</th>
+                                <th >Asal Surat</th>
+                                <th >Tanggal Surat</th>
+                                <th >Isi Surat</th>
+                                <th >Status</th>
+                                <th >File</th>
+                                <th >Tampil</th>
                             </tr>
                         </thead>
+
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
-$(document).ready(function (){
-   
+var token = '<%= csrfToken %>'
+var datasimpan = "";
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': token
+        }
+});
+$(document).ready(function(){
+    var tableaplikasi = $('#datamasuk').dataTable({
+        "processing":true,
+        "paging":true,
+        "bInfo":true,
+        "serverside":true,
+        // "ajax":{
+            
+        //     "url":'/datatableaksespengguna',
+        //     "type":"POST",
+        //     "dataSrc":"",
+        // },
+        "columns":[
+            {
+                "data":"id_no","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"no_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"asal_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"tgl_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"tgl_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"isi_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"file","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"tampil","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            // {
+            //     "data":null,"autoWidth":true,"render":function(data){
+            //         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+            //             '<a class="fa fa-edit" style="padding-right:1rem"/>'+
+            //             '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+            //             '</div>'
+            //     }
+            // }
+            
+        ]
+    })
 })
 </script>
