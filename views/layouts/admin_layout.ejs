@@ -90,14 +90,19 @@
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-lime elevation-4">
-            <a href="{{ secure_url('/home" class="brand-link">
+            <div class="d-flex" style="justify-content: center; align-items: center; border-bottom: 1px solid gray;">
+                <p style="font-size: 1.5rem; color:white; letter-spacing: 0.2rem; font-family: serif;">Aplikasi DMS</p>
+            </div>
+            <!--<a href="{{ secure_url('/home" class="brand-link"> </a>-->
+            <div class="d-flex" style=" border-bottom:1px solid gray; height: 3.5rem;">
                 <img src="/assets/img/logo.png" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
-                <span class="brand-text font-weight-light"> <%= env_sitetitle %></span>
-            </a>
+                    style="opacity: 0.8; width: 2.5rem; height: 2.5rem;"/>
+                <p class="brand-text font-weight-light" style="font-size: 2rem; color:white; padding-left:1rem; letter-spacing: 0.2rem; font-family: serif;"> <%= session.user.fullname %></p>
+            </div>
 
             <div class="sidebar">
-                <nav class="mt-2">
+                <nav class="mt-4">
+                    <p style="font-size:1.2rem; color:white">Setting</p>
                     <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-flat"
                         data-widget="treeview" role="menu" sdata-accordion="false">
                         <% if (session.pm_admin) { %>
@@ -124,9 +129,9 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <% if (locals.breadcrumbs) { %>
-                                    <%- breadcrumbs %>  
-                                <% } %>
+                                
+                                    <%- locals.breadcrumbs %>  
+                                
                             </ol>
                         </div>
                     </div>
@@ -177,10 +182,30 @@
                 height: 250
             });
         });
-
+        
+       
         function menu(namamenu){
-            window.open('/aksesmenu/'+namamenu,'_self');
-        }
+            if(namamenu == "dashboard")
+            {
+                window.open('/Home/'+namamenu,'_self');
+            }
+            else if(namamenu == "AksesAdministrator")
+            {
+                window.open('/Settinguser/'+namamenu,'_self');
+            }
+            else if(namamenu == "Suratmasuk")
+            {
+                window.open('/Dokumen/'+namamenu,'_self');
+            }
+            else if(namamenu == "Disposisi")
+            {
+                window.open('/Dokumen/'+namamenu,'_self');
+            }
+            else if(namamenu == "Suratkeluar")
+            {
+                window.open('/Dokumen/'+namamenu,'_self');
+            }
+        }   
     </script>
 
 

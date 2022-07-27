@@ -11,6 +11,7 @@ const UserModule = require('../models/UserModule');
 const flash = require('express-flash');
 
 
+
 // const User = UserModel.User;
 // const UserRaw = UserModel.UserRaw;
 
@@ -218,3 +219,5 @@ exports.changePassword = (req, res, next) => {
         });
     }
 };
+
+

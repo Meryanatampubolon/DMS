@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h3>Halaman Pengelolaan surat Disposisi</h3>
+        <div class="card" style="margin-top: 2rem;">
+            <div class="card-header">
+                <p style="font-size: 1.2rem; color: black; font-weight: bold;">Rekap Surat Masuk</p>
+            </div>
+            <div class="card-body">
+                <div class="mt-2">
+                    <table id="tabelsuratdisposisi" class="table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nomor Surat</th>
+                                <th>Asal Surat</th>
+                                <th>Isi Surat</th>
+                                <th>Tgl Surat</th>
+                                <th>Tgl Diterima</th>
+                                <th>Status</th>
+                                <th>file</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function(){
+        var suratdisposisi = $('#tabelsuratdisposisi').dataTable({
+            "processing":true,
+            "paging":true,
+            "bInfo":true,
+            "serverside":true,
+            // "ajax":{
+                
+            //     "url":'/datatableaksespengguna',
+            //     "type":"POST",
+            //     "dataSrc":"",
+            // },
+            "columns":[
+                {
+                    "data":"no","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"nomorsurat","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"asalsurat","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"isisurat","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"tglsurat","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"tglterima","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"status","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":null,"autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":null,"autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a class="fa fa-edit" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+                            '</div>'
+                    }
+                }
+                
+            ]
+        })
+    })
+</script>
