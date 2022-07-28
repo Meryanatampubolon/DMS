@@ -19,7 +19,20 @@ const vDepartemen = sequelize.define('view_departemen', {
         {
             fields: ['userId', 'departemenId', 'departemenParentId']
         }],
-    });
+});
+
+const vDepartemen2 = sequelize.define('view_departemen2', {
+    subDepartemenId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
+    departemen: DataTypes.STRING,    
+    subDepartemen: DataTypes.STRING,
+    subKeterangan: DataTypes.STRING,
+},
+    {
+    freezeTableName: true,
+});
 
 const tDepartemen = sequelize.define('departemen', {
     departemenId: {
@@ -54,4 +67,4 @@ async function departemen_edit(vars) {
     }
 }
 
-module.exports = { vDepartemen, tDepartemen, departemen_edit};
+module.exports = { vDepartemen, vDepartemen2, tDepartemen, departemen_edit};

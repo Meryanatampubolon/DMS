@@ -13,8 +13,8 @@ exports.pageNotFound = (req, res, next) => {
 exports.adminPage = (req, res, next) => {
 
     let vars = {
-        pages: '../pages/admin',
-        pageTitle: 'test'
+        pages: '../pages/dashboard',
+        pageTitle: 'Dashboard'
     };
     res.render('layouts/admin_layout', vars);
 };

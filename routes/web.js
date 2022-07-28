@@ -30,6 +30,7 @@ router.get('/login-changepassword', isAuth('/login'), AuthController.changePassw
 router.post('/login-changepassword', isAuth('/login'), AuthController.changePassword);
 
 router.get('/admin', isAuth(), PageController.adminPage);
+
 router.get('/Home/:menus',isAuth(),PageController.aksesmenu);
 router.get('/Settinguser/:menus',isAuth(),PageController.aksesmenu);
 router.get('/Masteraplikasi/:menus',isAuth(),PageController.aksesmenu);
@@ -67,6 +68,8 @@ router.post('/bagian-add', isAuth(), checkPermission('pm_admin'), DepartemenCont
 router.get('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.edit);
 router.post('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.edit);
 router.get('/bagian-delete/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.delete);
+
+router.get('/subbagian', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_list);
 
 router.post('/subbagian-add', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_add);
 router.post('/subbagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_edit);
