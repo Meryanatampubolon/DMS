@@ -9,6 +9,8 @@ const session = require('express-session');
 const expressHbs = require('express-handlebars');
 const SequelizeStore = require("connect-session-sequelize")(session.Store); // initalize sequelize with session store
 const fs = require('fs');
+const hlp = require('./app/helpers/helpers');
+
 
 
 const http = require('http');
@@ -77,9 +79,10 @@ app.use((req, res, next) => {
     res.locals.canRegister = constant.MY_SITECANREGISTER;
     res.locals.constant = {};
     // constant disimpan di locals supaya bisa dipakai di views
-    Object.keys(constant).forEach(function(key) {
-        res.locals.constant[key]=constant[key]      
-      });
+    Object.keys(constant).forEach(function (key) {
+        res.locals.constant[key] = constant[key]
+    });
+    res.locals.hlp = hlp;
     next();
 });
 

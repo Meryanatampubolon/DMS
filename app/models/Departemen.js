@@ -14,25 +14,25 @@ const vDepartemen = sequelize.define('view_departemen', {
     subDepartemen: DataTypes.STRING,
 },
     {
-    freezeTableName: true,
-    indexes: [
-        {
-            fields: ['userId', 'departemenId', 'departemenParentId']
-        }],
-});
+        freezeTableName: true,
+        indexes: [
+            {
+                fields: ['userId', 'departemenId', 'departemenParentId']
+            }],
+    });
 
 const vDepartemen2 = sequelize.define('view_departemen2', {
     subDepartemenId: {
         type: DataTypes.INTEGER,
         primaryKey: true
     },
-    departemen: DataTypes.STRING,    
+    departemen: DataTypes.STRING,
     subDepartemen: DataTypes.STRING,
     subKeterangan: DataTypes.STRING,
 },
     {
-    freezeTableName: true,
-});
+        freezeTableName: true,
+    });
 
 const tDepartemen = sequelize.define('departemen', {
     departemenId: {
@@ -43,16 +43,16 @@ const tDepartemen = sequelize.define('departemen', {
     },
     departemen: DataTypes.STRING,
     keterangan: DataTypes.STRING,
-    departemenParentId:DataTypes.INTEGER
+    departemenParentId: DataTypes.INTEGER
 },
-{
-    freezeTableName: true,
-    indexes: [
-        {
-            fields: ['departemenId', 'departemenParentId']
-        }],
-}
-    
+    {
+        freezeTableName: true,
+        indexes: [
+            {
+                fields: ['departemenId', 'departemenParentId']
+            }],
+    }
+
 );
 
 async function departemen_edit(vars) {
@@ -61,10 +61,12 @@ async function departemen_edit(vars) {
     ('departemenId' in vars) ? vwhere.departemenId = vars.departemenId : null;
     ('departemen' in vars) ? data.departemen = vars.departemen : null;
     ('keterangan' in vars) ? data.keterangan = vars.keterangan : null;
-    ('departemenParentID' in vars) ? data.departemenParentID = vars.departemenParentID : null;
+    ('departemenParentId' in vars) ? data.departemenParentId = vars.departemenParentId : null;
+
+    console.log(data);
     if (hlp.ObjNotEmpty(vwhere)) {
-         return await tDepartemen.update(data, { where: vwhere });
+        return await tDepartemen.update(data, { where: vwhere });
     }
 }
 
-module.exports = { vDepartemen, vDepartemen2, tDepartemen, departemen_edit};
+module.exports = { vDepartemen, vDepartemen2, tDepartemen, departemen_edit };

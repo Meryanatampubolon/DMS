@@ -39,7 +39,7 @@
                                     <td><%= row.keterangan %> </td>
                                     <td class="text-right">
                                         <a onClick="editsubbagian('<%= row.departemenId %>','<%= row.departemen %>','<%= row.keterangan %>')" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
-                                        <a onClick="return confirm('<%= constant.MY_DATADELETECONFIRM %> ')" href="/subbagian-delete/<%= row.departemenId %>/<%= q_departemen.departemenId %> " class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                                        <a onClick="return confirm('<%= constant.MY_DATADELETECONFIRM %> ')" href="/subbagian-delete/<%= row.departemenId %>/<%= hlp.encrypt('/bagian-edit/'+q_departemen.departemenId) %>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
 
                                     </td>
 
@@ -82,7 +82,9 @@
                 <form id="form-subbagian" action="" method="post">
                 <div class="card-body">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <input type="hidden" name="departemenParentId" value="<%= q_departemen.departemenId %> ">
+                    <input type="hidden" name="departemenParentId" value="<%= q_departemen.departemenId %>">
+                    <input type="hidden" name="redirectUrl" value="<%= hlp.encrypt('/bagian-edit/'+q_departemen.departemenId)  %>">
+                    
                     <div class="form-group">
                         <label>Nama Bagian</label>
                         <input type="text" class="form-control" id="subdepartemen" name="subdepartemen" placeholder="Nama sub bagian" value="<%= oldInput ? oldInput.subdepartemen: '' %> ">

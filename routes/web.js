@@ -31,15 +31,15 @@ router.post('/login-changepassword', isAuth('/login'), AuthController.changePass
 
 router.get('/admin', isAuth(), PageController.adminPage);
 
-router.get('/Home/:menus',isAuth(),PageController.aksesmenu);
-router.get('/Settinguser/:menus',isAuth(),PageController.aksesmenu);
-router.get('/Masteraplikasi/:menus',isAuth(),PageController.aksesmenu);
-router.get('/Dokumen/:menus',isAuth(),PageController.aksesmenu);
+router.get('/Home/:menus', isAuth(), PageController.aksesmenu);
+router.get('/Settinguser/:menus', isAuth(), PageController.aksesmenu);
+router.get('/Masteraplikasi/:menus', isAuth(), PageController.aksesmenu);
+router.get('/Dokumen/:menus', isAuth(), PageController.aksesmenu);
 router.get('/profile', isAuth(), UserController.profile);
 router.get('/profile-changepassword', isAuth(), UserController.changePassword);
 router.post('/profile-changepassword', isAuth(), UserController.changePassword);
-router.post('/datatableaksespengguna',isAuth(),AksesPenggunaController.datatableakses);
-router.post('/akses_add',isAuth(),AksesPenggunaController.insertakses)
+router.post('/datatableaksespengguna', isAuth(), AksesPenggunaController.datatableakses);
+router.post('/akses_add', isAuth(), AksesPenggunaController.insertakses)
 
 // admin
 router.get('/users', isAuth(), checkPermission('pm_admin'), UserController.list);
@@ -53,7 +53,7 @@ router.post('/users-module-add', isAuth(), checkPermission('pm_admin'), UserCont
 router.get('/users-module-delete/:id', isAuth(), checkPermission('pm_admin'), UserController.moduleDelete);
 router.get('/users-password-reset/:userId', isAuth(), checkPermission('pm_admin'), UserController.passwordReset);
 
-router.get('/debug', isAuth(),checkPermission('pm_admin'), PageController.debug);
+router.get('/debug', isAuth(), checkPermission('pm_admin'), PageController.debug);
 router.get('/modules', isAuth(), checkPermission('pm_admin'), ModuleController.list);
 router.post('/modules-add', isAuth(), checkPermission('pm_admin'), ModuleController.add);
 router.get('/modules-delete/:userId/:moduleId', isAuth(), checkPermission('pm_admin'), ModuleController.delete);
@@ -73,7 +73,12 @@ router.get('/subbagian', isAuth(), checkPermission('pm_admin'), DepartemenContro
 
 router.post('/subbagian-add', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_add);
 router.post('/subbagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_edit);
-router.get('/subbagian-delete/:departemenId/:departemenParentId', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_delete);
+router.get('/subbagian-delete/:departemenId/:redirectUrl', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_delete);
+
+router.get('/pengguna', isAuth(), checkPermission('pm_admin'), UserController.list_nonadmin);
+router.post('/pengguna-add', isAuth(), checkPermission('pm_admin'), UserController.add_nonadmin);
+
+
 
 
 

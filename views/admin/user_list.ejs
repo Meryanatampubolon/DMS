@@ -2,13 +2,17 @@
     <div class="card">
         <div class="card-header">
             <h5 class="float-left">Daftar user</h5>
-            <a class="btn btn-primary float-right" href="/users-add"><i class="fa fa-plus"></i></a>
+            <% if (nonadmin) { %>
+                <a  data-toggle="modal" data-target="#modal-adduser" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
+            <% } else { %>
+                <a class="btn btn-primary float-right" href="/users-add"><i class="fa fa-plus"></i></a>                    
+            <% } %>
         </div>
         <div class="card-body p-1">
             <table class="table table-super-condensed table-striped">
                 <thead class="bg-primary text-white">
                     <th class="w-10">UID</th>
-                    <th class="w-20">Fullname</th>
+                    <th class="w-20">Nama Lengkap</th>
                     <th class="w-20">Email</th>
                     <th class="w-20">hak akses</th>
                     <th class="w-20">Login terakhir pada</th>
@@ -33,8 +37,63 @@
             </table>
         </div>
         <div class="card-footer">
-            <h6>Username dicetak tebal adalah username dengan password default, yaitu <strong><%= constant.MY_DEFAULTPASSWORD %></strong> </h6>
+            <h6>Username dicetak tebal adalah username yang masih menggunakan dengan password default, yaitu <strong><%= constant.MY_DEFAULTPASSWORD %></strong> </h6>
         </div>
     </div>
+    <% if (nonadmin) { %>
+        <div class="modal fade" id="modal-adduser">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="modal-title" class="modal-title">Tambah Pengguna</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="form-pengguna" action="/pengguna-add" method="post">
+                        <div class="modal-body">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <div class="form-group">
+                                <label>Bagian</label>
+                                <select name="departemenId" id="departemenId" class="form-control">
+                                    <% q_departemen.forEach(row => { %>
+                                        <option value="<%= row.departemenId %>"><%= row.departemen %> </option>                                 
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Hak akses</label>
+                                <select name="moduleId" id="moduleId" class="form-control">
+                                    <% q_module.forEach(row => { %>
+                                        <option value="<%= row.moduleId %>"><%= row.moduleName %> </option>                                 
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fullname</label>
+                                <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Fullname" value="<%= q_user? q_user.fullname: (oldInput ? oldInput.fullname: '') %> ">
+                            </div>
+                            <div class="form-group">
+                                <label>Email address</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<%= q_user? q_user.email: (oldInput ? oldInput.email: '') %>">
+                            </div>
+                            <div class="form-group">
+                                <label>Default password</label>
+                                <input type="text" class="form-control" disabled placeholder="" value="<%= constant.MY_DEFAULTPASSWORD %> ">
+                            </div> 
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+     
+    <% } %>
+
 
 </div>
