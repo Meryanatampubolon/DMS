@@ -1,6 +1,7 @@
 const validator = require('validator');
 const User = require('../../models/User');
 const UserModule = require('../../models/UserModule');
+const UserDepartemen = require('../../models/UserDepartemen');
 const Modules = require('../../models/Modules');
 const Departemen = require('../../models/Departemen');
 const constant = require('../../../config/constant');
@@ -76,7 +77,7 @@ exports.list = (req, res, next) => {
 
             let vars = {
                 q_user: result,
-                nonadmin: false,
+                superadmin: true,
                 defpassword: hlp.md5(constant.MY_DEFAULTPASSWORD),
                 breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
                 menu_admin: true,
@@ -237,6 +238,33 @@ exports.departemen_list = (req, res, next) => {
         });
 }
 
+exports.list_admin = (req, res, next) => {
+    const q1 = User.user_get({ opt_where: { moduleName: 'Administrator' } });
+    const q2 = Modules.findAll({ raw: true, where: { moduleName: ['Administrator'] } });
+
+    Promise.all([q1, q2]).then(result => {
+        let breadcrumbs = {
+            Home: '/admin',
+            Administrator: '#'
+        }
+        let vars = {
+            q_user: result[0],
+            q_departemen: [{}],
+            q_module: result[1],
+            superadmin: false,
+            defpassword: hlp.md5(constant.MY_DEFAULTPASSWORD),
+            breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
+            menu_pengaturan: true,
+            pages: '../admin/user_list',
+            pageTitle: 'Akses administrator',
+        };
+        res.render('layouts/admin_layout', vars);
+
+    });
+}
+
+
+
 exports.list_nonadmin = (req, res, next) => {
     const q1 = User.user_get({ opt_where: { moduleName: ['Staff', 'Pimpinan'] } });
     const q2 = Departemen.vDepartemen.findAll({ raw: true, where: { departemenParentId: null } });
@@ -253,12 +281,12 @@ exports.list_nonadmin = (req, res, next) => {
             q_user: result[0],
             q_departemen: result[1],
             q_module: result[2],
-            nonadmin: true,
+            superadmin: false,
             defpassword: hlp.md5(constant.MY_DEFAULTPASSWORD),
             breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
             menu_pengaturan: true,
             pages: '../admin/user_list',
-            pageTitle: 'User List',
+            pageTitle: 'Pengguna',
         };
         res.render('layouts/admin_layout', vars);
 
@@ -279,8 +307,9 @@ exports.add_nonadmin = (req, res, next) => {
             return res.redirect('/pengguna');
         } else {
             User.tUser.create({ fullname: req.body.fullname, email: req.body.email, password: hlp.md5(constant.MY_DEFAULTPASSWORD) }).then(r1 => {
-                const q1 = UserModule.tUserModule.create({ userId: r1.userId, moduleId: req.body.moduleId });
-                Promise.all([q1]).then(result => {
+                const q1 = UserModule.tUserModule.findOrCreate({ where: { userId: r1.userId, moduleId: req.body.moduleId } });
+                const q2 = UserDepartemen.tUserDepartemen.findOrCreate({ where: { userId: r1.userId, departemenId: req.body.departemenId } });
+                Promise.all([q1, q2]).then(result => {
                     hlp.genAlert(req, { message: constant.MY_USERCREATED });
                     return res.redirect('/pengguna');
                 });
@@ -288,3 +317,15 @@ exports.add_nonadmin = (req, res, next) => {
         }
     });
 }
+
+
+exports.delete_nonadmin = (req, res, next) => {
+    const q1 = User.tUser.destroy({ where: { userId: req.body.userId } });
+    const q2 = UserModule.tUserModule.destroy({ where: { userId: req.body.userId } });
+    const q3 = UserDepartemen.tUserDepartemen.destroy({ where: { userId: req.body.userId } });
+    Promise.all([q1, q2, q3]).then(result => {
+        hlp.genAlert(req, { tipe: 'error', message: constant.MY_DATADELETE });
+        return res.redirect('/pengguna');
+    });
+
+};

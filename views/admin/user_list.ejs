@@ -2,10 +2,10 @@
     <div class="card">
         <div class="card-header">
             <h5 class="float-left">Daftar user</h5>
-            <% if (nonadmin) { %>
-                <a  data-toggle="modal" data-target="#modal-adduser" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
-            <% } else { %>
+            <% if (superadmin) { %>
                 <a class="btn btn-primary float-right" href="/users-add"><i class="fa fa-plus"></i></a>                    
+            <% } else { %>
+                <a  data-toggle="modal" data-target="#modal-adduser" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
             <% } %>
         </div>
         <div class="card-body p-1">
@@ -14,7 +14,7 @@
                     <th class="w-10">UID</th>
                     <th class="w-20">Nama Lengkap</th>
                     <th class="w-20">Email</th>
-                    <th class="w-20">hak akses</th>
+                    <th class="w-20">Hak akses</th>
                     <th class="w-20">Login terakhir pada</th>
                     <th class="w-10"></th>
                 </thead>
@@ -29,7 +29,7 @@
                          <td class="text-right">
                             <a onClick="return confirm('Reset password ke password default?')" href="/users-password-reset/<%= row.userId %> " class="btn btn-xs btn-default"><i class="fa fa-refresh"></i></a>
                              <a href="/users-edit/<%= row.userId %> " class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
-                             <a onClick="return confirm('<%= constant.MY_DATADELETECONFIRM %> ')" href="/users-delete/<%= row.userId %>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                             <a onClick="userDelete('<%= row.userId %>')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
                          </td>
                      </tr>
                     <% }) %>
@@ -40,7 +40,7 @@
             <h6>Username dicetak tebal adalah username yang masih menggunakan dengan password default, yaitu <strong><%= constant.MY_DEFAULTPASSWORD %></strong> </h6>
         </div>
     </div>
-    <% if (nonadmin) { %>
+    <% if (!superadmin) { %>
         <div class="modal fade" id="modal-adduser">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -94,6 +94,32 @@
         </div>
      
     <% } %>
+
+    <script>
+        function userDelete(id){
+            if( confirm('<%= constant.MY_DATADELETECONFIRM %> ')){
+                $.ajax({
+                    url: "/pengguna-delete",
+                    type: "POST",
+                    data: {
+                        _csrf: "<%= csrfToken %>",
+                        userId: id
+                    },
+                    cache: true,
+                    error: function() {
+                        alert('Something is wrong');
+                    },
+                    success: function(data) {
+                        alert("<%= constant.MY_DATADELETE %>");
+                        location.reload();
+                    }
+                })
+
+            }
+        }
+
+        function userEdit(){}
+    </script>
 
 
 </div>

@@ -106,17 +106,15 @@
                         <li class="nav-item">
                             <a href="" class="nav-link"> <i class="fa fa-home nav-icon" ></i> <p>Dashboard</p></a>
                         </li>
-                        <% if (session.pm_admin) { %>
+                        <% if (session.pm_superadmin) { %>
                             <%- include('../admin/admin_menu')  %>                          
                         <% } %>
-                        <% if (session.pm_administrator) { %>
-                                          
+                        <% if (session.pm_superadmin || session.pm_administrator) { %>
+                            <%- include('../admin/administrator_menu')  %>
                         <% } %>
-                        <% if (session.pm_staff || session.pm_pimpinan) { %>
-                            <%- include('../dokumen/dokumen_menu')  %> 
-                                               
-                        <% } %>
-                        
+                        <% if (session.pm_superadmin || session.pm_staff || session.pm_pimpinan) { %>
+                            <%- include('../dokumen/dokumen_menu')  %>                                                
+                        <% } %>                       
 
                     </ul>
                 </nav>

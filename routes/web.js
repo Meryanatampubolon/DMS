@@ -7,6 +7,8 @@ const ModuleController = require('../app/controllers/admin/ModuleController');
 const AksesPenggunaController = require('../app/controllers/AksesPenggunaController');
 const InstansiController = require('../app/controllers/admin/InstansiController');
 const DepartemenController = require('../app/controllers/admin/DepartemenController');
+const AksesDokumenController = require('../app/controllers/admin/AksesDokumenController');
+
 
 
 
@@ -42,50 +44,47 @@ router.post('/datatableaksespengguna', isAuth(), AksesPenggunaController.datatab
 router.post('/akses_add', isAuth(), AksesPenggunaController.insertakses)
 
 // admin
-router.get('/users', isAuth(), checkPermission('pm_admin'), UserController.list);
-router.get('/users-add', isAuth(), checkPermission('pm_admin'), UserController.add);
-router.post('/users-add', isAuth(), checkPermission('pm_admin'), UserController.add);
+router.get('/users', isAuth(), checkPermission('pm_superadmin'), UserController.list);
+router.get('/users-add', isAuth(), checkPermission('pm_superadmin'), UserController.add);
+router.post('/users-add', isAuth(), checkPermission('pm_superadmin'), UserController.add);
 
-router.get('/users-delete/:userId', isAuth(), checkPermission('pm_admin'), UserController.delete);
-router.get('/users-edit/:userId', isAuth(), checkPermission('pm_admin'), UserController.edit);
-router.post('/users-edit/:userId', isAuth(), checkPermission('pm_admin'), UserController.edit);
-router.post('/users-module-add', isAuth(), checkPermission('pm_admin'), UserController.moduleAdd);
-router.get('/users-module-delete/:id', isAuth(), checkPermission('pm_admin'), UserController.moduleDelete);
-router.get('/users-password-reset/:userId', isAuth(), checkPermission('pm_admin'), UserController.passwordReset);
+router.get('/users-delete/:userId', isAuth(), checkPermission('pm_superadmin'), UserController.delete);
+router.get('/users-edit/:userId', isAuth(), checkPermission('pm_superadmin'), UserController.edit);
+router.post('/users-edit/:userId', isAuth(), checkPermission('pm_superadmin'), UserController.edit);
+router.post('/users-module-add', isAuth(), checkPermission('pm_superadmin'), UserController.moduleAdd);
+router.get('/users-module-delete/:id', isAuth(), checkPermission('pm_superadmin'), UserController.moduleDelete);
+router.get('/users-password-reset/:userId', isAuth(), checkPermission('pm_superadmin'), UserController.passwordReset);
 
-router.get('/debug', isAuth(), checkPermission('pm_admin'), PageController.debug);
-router.get('/modules', isAuth(), checkPermission('pm_admin'), ModuleController.list);
-router.post('/modules-add', isAuth(), checkPermission('pm_admin'), ModuleController.add);
-router.get('/modules-delete/:userId/:moduleId', isAuth(), checkPermission('pm_admin'), ModuleController.delete);
+router.get('/debug', isAuth(), checkPermission('pm_superadmin'), PageController.debug);
+router.get('/modules', isAuth(), checkPermission('pm_superadmin'), ModuleController.list);
+router.post('/modules-add', isAuth(), checkPermission('pm_superadmin'), ModuleController.add);
+router.get('/modules-delete/:userId/:moduleId', isAuth(), checkPermission('pm_superadmin'), ModuleController.delete);
 
-router.get('/instansi', isAuth(), checkPermission('pm_admin'), InstansiController.index);
-router.post('/instansi', isAuth(), checkPermission('pm_admin'), InstansiController.index);
-
-
-router.get('/bagian', isAuth(), checkPermission('pm_admin'), DepartemenController.list);
-router.get('/bagian-add', isAuth(), checkPermission('pm_admin'), DepartemenController.add);
-router.post('/bagian-add', isAuth(), checkPermission('pm_admin'), DepartemenController.add);
-router.get('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.edit);
-router.post('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.edit);
-router.get('/bagian-delete/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.delete);
-
-router.get('/subbagian', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_list);
-
-router.post('/subbagian-add', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_add);
-router.post('/subbagian-edit/:departemenId', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_edit);
-router.get('/subbagian-delete/:departemenId/:redirectUrl', isAuth(), checkPermission('pm_admin'), DepartemenController.subbagian_delete);
-
-router.get('/pengguna', isAuth(), checkPermission('pm_admin'), UserController.list_nonadmin);
-router.post('/pengguna-add', isAuth(), checkPermission('pm_admin'), UserController.add_nonadmin);
+router.get('/instansi', isAuth(), checkPermission('pm_administrator'), InstansiController.index);
+router.post('/instansi', isAuth(), checkPermission('pm_administrator'), InstansiController.index);
 
 
+router.get('/bagian', isAuth(), checkPermission('pm_administrator'), DepartemenController.list);
+router.get('/bagian-add', isAuth(), checkPermission('pm_administrator'), DepartemenController.add);
+router.post('/bagian-add', isAuth(), checkPermission('pm_administrator'), DepartemenController.add);
+router.get('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_administrator'), DepartemenController.edit);
+router.post('/bagian-edit/:departemenId', isAuth(), checkPermission('pm_administrator'), DepartemenController.edit);
+router.get('/bagian-delete/:departemenId', isAuth(), checkPermission('pm_administrator'), DepartemenController.delete);
+
+router.get('/subbagian', isAuth(), checkPermission('pm_administrator'), DepartemenController.subbagian_list);
+
+router.post('/subbagian-add', isAuth(), checkPermission('pm_administrator'), DepartemenController.subbagian_add);
+router.post('/subbagian-edit/:departemenId', isAuth(), checkPermission('pm_administrator'), DepartemenController.subbagian_edit);
+router.get('/subbagian-delete/:departemenId/:redirectUrl', isAuth(), checkPermission('pm_administrator'), DepartemenController.subbagian_delete);
+
+router.get('/pengguna', isAuth(), checkPermission('pm_administrator'), UserController.list_nonadmin);
+router.post('/pengguna-add', isAuth(), checkPermission('pm_administrator'), UserController.add_nonadmin);
+router.post('/pengguna-delete', isAuth(), checkPermission('pm_administrator'), UserController.delete_nonadmin);
+router.get('/administrator', isAuth(), checkPermission('pm_administrator'), UserController.list_admin);
 
 
-
-
-
-
-
+router.get('/aksesdokumen', isAuth(), checkPermission('pm_administrator'), AksesDokumenController.list);
+router.get('/aksesdokumen-edit/:departemenId', isAuth(), checkPermission('pm_administrator'), AksesDokumenController.edit);
 
 
 

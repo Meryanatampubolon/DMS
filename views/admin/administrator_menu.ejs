@@ -1,0 +1,59 @@
+<li class="nav-item <%= (locals.menu_pengaturan ? 'menu-is-opening menu-open' : '') %>">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-user-gear"></i>
+        <p>
+        Pengaturan Aplikasi
+        <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview" <%- (locals.menu_pengaturan ? 'style="display:block"' : 'style="display: none"') %> >
+        <li class="nav-item">
+            <a href="/administrator" class="nav-link">
+                <i class="fa fa-user-circle nav-icon"></i>
+                <p>Administrator</p>
+            </a>
+        </li> 
+    </ul>
+</li>
+<li class="nav-item <%= (locals.menu_pengaturan ? 'menu-is-opening menu-open' : '') %>">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-user-gear"></i>
+        <p>
+        Master Aplikasi
+        <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview" <%- (locals.menu_pengaturan ? 'style="display:block"' : 'style="display: none"') %> >
+        <li class="nav-item">
+            <a href="/instansi" class="nav-link">
+                <i class="fa fa-building nav-icon"></i>
+                <p>Instansi</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/bagian" class="nav-link">
+                <i class="fa fa-users nav-icon"></i>
+                <p>Bagian</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/subbagian" class="nav-link">
+                <i class="fa fa-users-between-lines nav-icon"></i>
+                <p>Sub Bagian</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/pengguna" class="nav-link">
+                <i class="fa fa-user-plus nav-icon"></i>
+                <p>Pengguna</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/aksesdokumen" class="nav-link">
+                <i class="fa fa-clipboard-check  nav-icon"></i>
+                <p>Hak Akses Dokumen</p>
+            </a>
+        </li>
+        
+    </ul>
+</li>
