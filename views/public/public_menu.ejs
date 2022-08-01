@@ -1,27 +1,65 @@
 <li class="nav-item">
+  <a href="#" class="nav-link" onclick="menu('dashboard')">
+    <i class="fa fa-home nav-icon" style="font-size: 1.2rem;"></i>
+    <p style="font-size: 1.2rem; ">Dashboard</p>
+  </a>
+</li>
+<li class="nav-item">
     <a href="#" class="nav-link">
-      <i class="nav-icon fas  fa-gears"></i>
-      <p>
-        Public
+      <i class="nav-icon fas  fa-gears" style="font-size:1.2rem"></i>
+      <p style="font-size:1.2rem">
+        Setting Aplikasi
         <i class="right fas fa-angle-left"></i>
       </p>
     </a>
     <ul class="nav nav-treeview">
       <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="fa fa-check nav-icon"></i>
-          <p>menu 1</p>
+        <a href="#" class="nav-link" onclick="menu('AksesAdministrator')">
+          <i class="fa fa-circle nav-icon" style="font-size: 1.2rem;"></i>
+          <p style="font-size: 1.2rem;">Akses Administrator</p>
         </a>
       </li>
-
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="fa fa-check nav-icon"></i>
-          <p>menu 2</p>
-        </a>
-      </li>
-     
-      </li>
-      
     </ul>
+</li>
+<li class="nav-item">
+  <a href="#" class="nav-link">
+    <i class="nav-icon fas fa-database" style="font-size: 1.2rem;"></i>
+    <p style="font-size: 1.2rem;">Master Aplikasi</p>
+    <i class="right fas fa-angle-left"></i>
+  </a>
+  <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="menu('instansi')">
+        <i class="fa fa-circle nav-icon" style="font-size: 1.2rem;"></i>
+        <p style="font-size: 1.2rem;">instansi</p>
+      </a>
+    </li>
+  </ul>
+</li>
+<li class="nav-item">
+  <a href="#" class="nav-link">
+    <i class="nav-icon fas fa-file" style="font-size: 1.2rem;"></i>
+    <p style="font-size: 1.2rem;">Dokumen</p>
+    <i class="right fas fa-angle-left"></i>
+  </a>
+  <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="menu('Suratmasuk')">
+        <i class="fa fa-circle nav-icon" style="font-size: 1.2rem;"></i>
+        <p style="font-size: 1.2rem;">Surat Masuk</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="menu('Disposisi')">
+        <i class="fa fa-circle nav-icon" style="font-size:1.2rem"></i>
+        <p style="font-size:1.2rem">Disposisi</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="menu('Suratkeluar')">
+        <i class="fa fa-circle nav-icon" style="font-size:1.2rem"></i>
+        <p style="font-size:1.2rem">Surat Keluar</p>
+      </a>
+    </li>
+  </ul>
 </li>

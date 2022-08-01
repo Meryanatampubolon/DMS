@@ -1,6 +1,17 @@
 
 const moment = require('moment');
-const crypto = require('crypto'); 
+const crypto = require('crypto');
+//const key = crypto.randomBytes(32);
+const key = 'kzntygcxywljvzvw';
+let encryptor = require('simple-encryptor')(key);
+
+function encrypt(text) {
+    return encryptor.encrypt(text);
+}
+
+function decrypt(text) {
+    return encryptor.decrypt(text);
+}
 
 
 /**
@@ -39,11 +50,11 @@ function randBetween(min, max) {
  * Input adalah seperti ini:
  * @data = { KEY: URL, KEY: URL }
  */
-function genBreadcrumbs(data){
+function genBreadcrumbs(data) {
     let result = '';
-    Object.keys(data).forEach(function(key) {
-        a = data[key] =='#' ? key : '<a href="'+data[key]+'">'+key+'</a>';
-        result += '<li class="breadcrumb-item">' +a+'</li>';      
+    Object.keys(data).forEach(function (key) {
+        a = data[key] == '#' ? key : '<a href="' + data[key] + '">' + key + '</a>';
+        result += '<li class="breadcrumb-item">' + a + '</li>';
     });
     return result;
 }
@@ -51,7 +62,7 @@ function genBreadcrumbs(data){
 /**
  * menghasilkan tanggal dan jam sekarang
  */
-function now(){
+function now() {
     return moment().format('YYYY-MM-DD hh:mm:ss')
 }
 
@@ -60,7 +71,7 @@ const oldInput = (req) => {
     if (oldInput.length > 0) {
         oldInput = oldInput[0];
     } else {
-        oldInput = {name: null, email: null}
+        oldInput = { name: null, email: null }
     }
 
     return oldInput;
@@ -69,9 +80,9 @@ const oldInput = (req) => {
 /**
  * menghasilkan md5 dari input
  */
-function md5(input){
+function md5(input) {
     return crypto.createHash('md5').update(input).digest('hex');
 }
 
 
-module.exports = { ObjNotEmpty, toastr, genAlert, randBetween,genBreadcrumbs, oldInput, now, md5}
+module.exports = { ObjNotEmpty, toastr, genAlert, randBetween, genBreadcrumbs, oldInput, now, md5, encrypt, decrypt }

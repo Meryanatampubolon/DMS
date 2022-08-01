@@ -11,38 +11,69 @@
     <script type="text/javascript" src="/assets/plugins/toastr/toastr.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
-
+    <script type="text/javascript" src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <link href="/assets/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="/css/tambahan.css" rel="stylesheet">
+    <script type="text/javascript" src="/assets/plugins/daterangepicker/daterangepicker.css"></script>
+    <!-- <link rel="stylesheet" href="/assets/fontawesome/css/fontawesome.min.css" > -->
 
-
-
+    <style>
+        html{
+            scroll-behavior: smooth;
+        }
+    </style>
 
 </head>
 
-<body class="my-login-page text-gray">
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-		<a href="/" style="text-decoration: none; color: inherit; margin-right: auto!important;"><h5 class="my-0 mr-md-auto font-weight-normal"><%= env_sitetitle %> </h5></a>
-        <nav class="my-2 my-md-0 mr-md-3">
-			<a class="p-2 text-dark" href="#">Features</a>
-			<a class="p-2 text-dark" href="#">Enterprise</a>
-			<a class="p-2 text-dark" href="#">Support</a>
-			<a class="p-2 text-dark" href="#">Pricing</a>
+<body>
+    <div id="berandaid" style="background-image: linear-gradient(180deg,#008080,#00CED1); width: 100%; height: 100vh;top:-5px; overflow: hidden;">
+        <nav class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 box-shadow">
+            <div class="rounded-circle position-relative" style="background-color:#55eb34; width:12rem; height:11rem; top: -2rem; left: -4rem;">
+                <i class="fa fa-bars position-relative" style="font-size: 2rem; left: 8rem; top: 2rem;"></i>
+            </div>
+            <a href="/" style="text-decoration: none; color: inherit; margin-right: auto!important;">
+                <img src="/assets/img/Coat_of_arms_of_Bekasi.png" class="px-md-4 img-fluid" style="width:8rem"/>
+            </a>
+            <div class="px-4 d-flex p-3" style="justify-content: space-between; font-size: 1.5rem;">
+			    <a class="p-2 text-white" href="#berandaid">Beranda</a>
+			    <a class="p-2 text-white" href="#eofficeid">Tentang</a>
+			    <a class="p-2 text-white" href="#idsupport">Support</a>
+			    <a class="p-2 text-white" href="#kontakid">Kontak Kami</a>
+                <a class="p-2 text-white" href=""><i class="fa fa-facebook"></i></a>
+                <a class="p-2 text-white" href=""><i class="fa fa-instagram"></i></a>
+                <a class="p-2 text-white" href=""><i class="fa fa-twitter"></i></a>
+            </div>
 		</nav>
-		<% if (isAuthenticated) { %>
-            <nav class="my-2 my-md-0 mr-md-3">
-                <a class="p-2 text-dark" href="/admin">Admin</a>
-            </nav>
-            <a class="btn btn-outline-primary" href="/logout">Logout</a>         
-            <% } else  { %>
 
-                <a class="btn btn-outline-primary" href="/login">Login</a>
-                <% } %>
-        
+        <div class="d-flex">
+            <div class="position-relative" style="top:-4rem">
+                <img src="/assets/img/Analytics_process_Two_Color.png" class="px-md-4 img-fluid" style="width: 42rem;"/>
+            </div>
+            <div class="d-flex flex-column mb-3">
+                <p style="font-size: 4rem; color: #08e5b7; font-weight: bold;">E-Office</p>
+                <p style="font-size: 2.5rem; color:white;">DPMPTSP KOTA BEKASI</p>
+                <div class="position-relative pt-4" style="top:4rem">
+                    <p style="font-size: 1.5rem; color:white;">Aplikasi Tanda Tangan Elektronik</p>
+		            <% if (isAuthenticated) { %>
+                        <nav class="my-2 my-md-0 mr-md-3">
+                            <a class="p-2 text-dark" href="/admin">Admin</a>
+                        </nav>
+                            <a class="btn btn-outline-primary" href="/logout">Logout</a>         
+                    <% } else  { %>
+
+                            <a class="w-50 h-50 btn btn-outline-primary bg-white p-2" style=" border-radius: 9999px;color:black;font-weight: bold;" href="/login">Login</a>
+                    <% } %>
+
+                </div>
+            </div>
+            <div class="position-relative" style="top:10px; font-size: 10rem;" >
+                <i class="fa fa-triangle"></i>
+            </div>
+        </div>
 	</div>
     <% if (alert) { %>
         <%- alert %>  
@@ -51,8 +82,9 @@
     <%- include(pages) %> 
 
 
-
 </body>
-
+<script>
+    window.addEventListener("hashchange",()=>window.history.pushState({},"","/"),{});
+</script>
 
 </html>

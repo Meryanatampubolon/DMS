@@ -1,0 +1,182 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h3>Halaman Dashboard</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex col-md-12 col-sm-12">
+                    <div class="card" style="margin-left: 2rem;">
+                        <div class="card-body" style="background-color: #87b5eb; width:16rem; height: 9rem;">
+                            <div class="d-flex" style="justify-content: space-between;">
+                                <div class="flex-column">
+                                    <div class="position-relative" style="top: -2rem">
+                                        <p style="font-size: 3rem; color: white;">5</p>
+                                    </div>
+                                    <div class="position-relative" style="top:-3rem">
+                                        <p style="font-size: 1.5rem; color:white">Surat Masuk</p>
+                                    </div>
+                                </div>
+                                <div class="position-relative" style="top:-1rem">
+                                    <i class="fa fa-envelope" style="font-size: 3.5rem;opacity: 0.5;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-left: 2rem;">
+                        <div class="card-body" style="background-color: #50c86e; width: 16rem; height: 9rem;">
+                            <div class="d-flex" style="justify-content: space-between;">
+                                <div class="flex-column">
+                                    <div class="position-relative" style="top:-2rem">
+                                        <p style="font-size: 3rem; color:white;">5</p>
+                                    </div>
+                                    <div class="position-relative" style="top:-3rem">
+                                        <p style="font-size: 1.5rem; color:white">Surat Keluar</p>
+                                    </div>
+                                </div>
+                                <div class="position-relative" style="top:-1rem">
+                                    <i class="fa fa-envelope" style="font-size: 3.5rem; opacity:0.5"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-left: 2rem;">
+                        <div class="card-body" style="background-color: #ffbf00; width: 16rem; height: 9rem;">
+                            <div class="d-flex" style="justify-content: space-between;">
+                                <div class="flex-column">
+                                    <div class="position-relative" style="top:-2rem">
+                                        <p style="font-size:3rem; color:black">4</p>
+                                    </div>
+                                    <div class="position-relative" style="top:-3rem">
+                                        <p style="font-size: 1.5rem; color:black">Bagian</p>
+                                    </div>
+                                </div>
+                                <div class="position-relative" style="top:-0.5rem">
+                                    <i class="fa fa-user-plus" style="font-size: 3.5rem; opacity:0.5"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-left: 2rem;">
+                        <div class="card-body" style="background-color: rgb(220 38 38); width:16rem; height: 9rem;">
+                            <div class="d-flex" style="justify-content: space-between;">
+                                <div class="flex-column">
+                                    <div class="position-relative" style="top:-2rem">
+                                        <p style="font-size: 3rem; color:white">8</p>
+                                    </div>
+                                    <div class="position-relative" style="top:-3rem">
+                                        <p style="font-size:1.5rem; color:white">Sub Bagian</p>
+                                    </div>
+                                </div>
+                                <div class="position-relative" style="top:-0.5rem">
+                                    <i class="fa fa-user-plus" style="font-size: 3.5rem; opacity: 0.5;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>Surat Tanggal Masuk</h3>
+            </div>
+            <div class="card-body">
+                <div class="mt-2">
+                    <table  class="table table-striped" id="datamasuk" style="width: 100%; ">
+                        <thead>
+                            <tr>
+                                <th >No</th>
+                                <th >Nomor Surat</th>
+                                <th >Asal Surat</th>
+                                <th >Tanggal Surat</th>
+                                <th >Isi Surat</th>
+                                <th >Status</th>
+                                <th >File</th>
+                                <th >Tampil</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+var token = '<%= csrfToken %>'
+var datasimpan = "";
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': token
+        }
+});
+$(document).ready(function(){
+    var tableaplikasi = $('#datamasuk').dataTable({
+        "processing":true,
+        "paging":true,
+        "bInfo":true,
+        "serverside":true,
+        // "ajax":{
+            
+        //     "url":'/datatableaksespengguna',
+        //     "type":"POST",
+        //     "dataSrc":"",
+        // },
+        "columns":[
+            {
+                "data":"id_no","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"no_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"asal_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"tgl_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"tgl_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"isi_surat","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"file","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            {
+                "data":"tampil","autoWidth":true,"render":function(data){
+                    return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                }
+            },
+            // {
+            //     "data":null,"autoWidth":true,"render":function(data){
+            //         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+            //             '<a class="fa fa-edit" style="padding-right:1rem"/>'+
+            //             '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+            //             '</div>'
+            //     }
+            // }
+            
+        ]
+    })
+})
+</script>

@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="float-left">Daftar Sub Bagian</h5>
+                <a class="btn btn-primary float-right" onClick="addsubbagian()"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-super-condensed table-striped">
+                    <thead class="bg-primary text-white">
+                        <th class="w-30">Nama Bagian</th>
+                        <th class="w-30">Sub Bagian</th>
+                        <th class="w-30">Keterangan</th>
+                        <th class="w-10"></th>
+                    </thead>
+                    <tbody>
+                        <% q_subdepartemen.forEach(row=> { %>
+                            <tr>
+                                <td><%= row.departemen %> </td>
+                                <td><%= row.subDepartemen %></td>
+                                <td><%= row.subKeterangan %></td>
+                                <td class="text-right">
+                                    <a onClick="editsubbagian('<%= row.subDepartemenId %>','<%= row.subDepartemen %>','<%= row.subKeterangan %>')" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a onClick="return confirm('<%= constant.MY_DATADELETECONFIRM %> ')" href="/subbagian-delete/<%= row.departemenId %>/<%= hlp.encrypt('/subbagian') %>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+
+            </div>
+            <script>
+                 function addsubbagian(){
+                    $('#form-subbagian').attr('action','/subbagian-add');
+                    $('#subdepartemen').val('');
+                    $('#title-subbagian').html('Tambah sub bagian untuk <%= q_departemen.departemen %>');
+
+                    $('#subketerangan').val('');
+                    $('#modal-subbagian').modal('show'); 
+
+                }
+
+                function editsubbagian(id,s,k){
+                    $('#form-subbagian').attr('action','/subbagian-edit/'+id);
+                    $('#title-subbagian').html('Edit sub bagian: '+s);
+
+                    $('#subdepartemen').val(s);
+                    $('#subketerangan').val(k);
+                    $('#modal-subbagian').modal('show'); 
+                }
+            </script>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-subbagian">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal-title" class="modal-title">Tambah Sub Bagian</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form-subbagian" action="" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="redirectUrl" value="<%=hlp.encrypt('/subbagian') %>">
+                       
+                        <div class="form-group">
+                            <label>Bagian</label>
+                            <select name="departemenParentId" id="departemenParentId" class="form-control">
+                                <% q_departemen.forEach(row => { %>
+                                    <option value="<%= row.departemenId %>"><%= row.departemen %> </option>                                 
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Sub Bagian</label>
+                            <input type="text" class="form-control" id="subdepartemen" name="subdepartemen"
+                                placeholder="Nama sub bagian" value="<%= oldInput ? oldInput.subdepartemen: '' %> ">
+                        </div>
+                        <div class="form-group">
+                            <label>Keterangan</label>
+                            <input type="text" class="form-control" id="subketerangan" name="subketerangan"
+                                placeholder="Keterangan sub bagian" value="<%= oldInput ? oldInput.keterangan: ''%>">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>

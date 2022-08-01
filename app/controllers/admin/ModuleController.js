@@ -11,7 +11,6 @@ exports.list = (req, res, next) => {
         Home: '/admin',
         Modules: '#'
     }
-
     
     Modules.findAll({raw: true})
     .then(result => {  

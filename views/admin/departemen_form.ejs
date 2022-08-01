@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="float-left"><%= edit? 'Edit' : 'Tambah' %></h5>
+                <a href="/bagian" class="btn btn-sm btn-danger float-right"><i class="fa fa-times"></i></a>
+
+            </div>
+           
+            <form action="<%= edit ? '/bagian-edit/'+q_departemen.departemenId : '/bagian-add' %> " method="post">
+                <div class="card-body">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="form-group">
+                        <label>Nama Bagian</label>
+                        <input type="text" class="form-control" id="departemen" name="departemen" placeholder="Nama bagian" value="<%= q_departemen? q_departemen.departemen: (oldInput ? oldInput.departemen: '') %> ">
+                    </div>
+                    <div class="form-group">
+                        <label>Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan bagian" value="<%= q_departemen? q_departemen.keterangan: (oldInput ? oldInput.keterangan: '') %>">
+                    </div>                        
+                </div>
+                <div class="card-footer">
+                    <button class="btn w-25 float-right btn-primary">Simpan</button>
+                </div>
+            </form>   
+        </div>
+        <% if (edit) { %>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="float-left">Sub Bagian</h5>
+                <a onClick="addsubbagian()" class="btn btn-sm btn-primary float-right"><i class="fa fa-plus"></i></a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-super-condensed table-striped">
+                        <tbody>
+                            <% q_subdepartemen.forEach(row => { %>
+                                <tr>
+                                    <td><%= row.departemen %> </td>
+                                    <td><%= row.keterangan %> </td>
+                                    <td class="text-right">
+                                        <a onClick="editsubbagian('<%= row.departemenId %>','<%= row.departemen %>','<%= row.keterangan %>')" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                                        <a onClick="return confirm('<%= constant.MY_DATADELETECONFIRM %> ')" href="/subbagian-delete/<%= row.departemenId %>/<%= hlp.encrypt('/bagian-edit/'+q_departemen.departemenId) %>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+
+                                    </td>
+
+                                </tr>
+                             
+                            <% }) %>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <script>
+                function addsubbagian(){
+                    $('#div-subbagian').removeClass('d-none');
+                    $('#form-subbagian').attr('action','/subbagian-add');
+                    $('#subdepartemen').val('');
+                    $('#title-subbagian').html('Tambah sub bagian untuk <%= q_departemen.departemen %>');
+
+                    $('#subketerangan').val('');
+                }
+                function editsubbagian(id,s,k){
+                    $('#div-subbagian').removeClass('d-none');
+                    $('#form-subbagian').attr('action','/subbagian-edit/'+id);
+                    $('#title-subbagian').html('Edit sub bagian: '+s);
+
+                    $('#subdepartemen').val(s);
+                    $('#subketerangan').val(k);
+                }
+            </script>
+         
+        <% } %>
+    </div>
+    <% if (edit) { %>
+        <div class="col-lg-4">
+            <div id="div-subbagian" class="card d-none">
+                <div class="card-header">
+                    <h5 id="title-subbagian" class="float-left"></h5>
+                    <a onClick="$('#div-subbagian').addClass('d-none')" class="btn btn-sm btn-danger float-right"><i class="fa fa-times"></i></a>
+                </div>
+                <form id="form-subbagian" action="" method="post">
+                <div class="card-body">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="departemenParentId" value="<%= q_departemen.departemenId %>">
+                    <input type="hidden" name="redirectUrl" value="<%= hlp.encrypt('/bagian-edit/'+q_departemen.departemenId)  %>">
+                    
+                    <div class="form-group">
+                        <label>Nama Bagian</label>
+                        <input type="text" class="form-control" id="subdepartemen" name="subdepartemen" placeholder="Nama sub bagian" value="<%= oldInput ? oldInput.subdepartemen: '' %> ">
+                    </div>
+                    <div class="form-group">
+                        <label>Keterangan</label>
+                        <input type="text" class="form-control" id="subketerangan" name="subketerangan" placeholder="Keterangan sub bagian" value="<%= oldInput ? oldInput.keterangan: ''%>">
+                    </div>    
+                </div>
+                <div class="card-footer">
+                    <button class="btn w-25 float-right btn-primary">Simpan</button>
+                </div>
+            </form>
+            </div>
+        </div>     
+    <% } %>
+</div>

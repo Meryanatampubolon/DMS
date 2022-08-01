@@ -88,7 +88,8 @@ async function user_add(vars) {
         // MD5 lebih mudah dan konsisten untuk dibandingkan daripada bcrypt kalau hanya sekedar password standard. 
         // Toh nanti pada saat user login pertama kali/setelah reset, akan diminta mengganti password.
         const findemail = tUser.findOne({ where: { email: vars.email } });
-        const pass = bcrypt.hash(('password' in vars) ? vars.password : constant.MY_DEFAULTPASSWORD, 12);
+        // const pass = bcrypt.hash(('password' in vars) ? vars.password : constant.MY_DEFAULTPASSWORD, 12);
+        const pass = hlp.md5(constant.MY_DEFAULTPASSWORD);
         let result = await Promise.all([findemail, pass])
             .then(result => {
                 if (!result[0]) {
@@ -96,7 +97,7 @@ async function user_add(vars) {
                     data.password = result[1];
                     data.email = vars.email;
                     tUser.create(data);
-                } 
+                }
             });
         return result;
     }
@@ -112,7 +113,7 @@ async function user_edit(vars) {
     ('resetToken' in vars) ? data.resetToken = vars.resetToken : null;
     ('resetTokenExpiry' in vars) ? data.resetTokenExpiry = vars.resetTokenExpiry : null;
     if (hlp.ObjNotEmpty(vwhere)) {
-         return await tUser.update(data, { where: vwhere });
+        return await tUser.update(data, { where: vwhere });
     }
 }
 

@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="float-left">Daftar Departemen/Bagian</h5>
+                <a class="btn btn-primary float-right" href="/bagian-add"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-super-condensed table-striped">
+                    <thead class="bg-primary text-white">
+                        <th class="w-40">Nama Bagian</th>
+                        <th class="w-50">Sub Bagian</th>
+                        <th class="w-10"></th>
+                    </thead>
+                    <tbody>
+                        <% q_departemen.forEach(row => { %>
+                        <tr>
+                            <td><%= row.departemen %><br><p class="text-sm"><%= row.keterangan  %> </p></td>
+                            <td><%= row.subDepartemen %> </td>
+                            <td class="text-right">
+                                <a href="/bagian-edit/<%= row.departemenId %> " class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                                <a onClick="return confirm('<%= constant.MY_DATADELETECONFIRM %> ')" href="/bagian-delete/<%= row.departemenId %>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>  
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

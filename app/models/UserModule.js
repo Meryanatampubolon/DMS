@@ -31,11 +31,11 @@ const tUserModule = sequelize.define('userModules', {
 },
     {
         indexes: [
-            // Create a unique index on email
             {
                 fields: ['userId', 'moduleId']
             }],
-    });
+    }
+);
 
 async function userModule_get(vars) {
     //console.log(vars);

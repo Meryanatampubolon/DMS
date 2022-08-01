@@ -1,0 +1,195 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h3>Halaman Pengunaan Aplikasi</h3>
+        <div class="mt-4">
+            <button class="btn btn-primary d-flex" type="button" style="justify-content: center; width: 10.5rem; height:2.5rem" data-toggle="modal" data-target="#tambahpengguna">
+                <i class="fa fa-plus" style="padding-right: 0.2rem; margin: auto;"></i>
+                <p style="font-size: 1rem;">Tambah pengguna</p>
+            </button>
+        </div>
+        <div class="card mt-2">
+            <div class="card-header">
+                Pengguna Aplikasi
+            </div>
+            <div class="card-body">
+                <table id="tablepenguna" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Lengkap</th>
+                            <th>Username</th>
+                            <th>Status Pengguna</th>
+                            <th>No handphone</th>
+                            <th>Email</th>
+                            <th>Akses</th>
+                            <!-- <th>Foto</th> -->
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tambahpengguna" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 50rem;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tambahpenggunalabel">Penambahan Pengguna</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="tambahaksespengguna" action="/akses_add" method="POST">
+            <div class="col-md-12 col-sm-12">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Nama Bagian</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="namabagian" name="namabagian">
+                            <option value="pemerintahan">Bg.pemerintahan</option>
+                            <option value="bupati">Bg.bupati</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Status Pengguna</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="statuspengguna" name="statuspengguna">
+                            <option value="pemimpin">Pemimpin</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Nama Lengkap</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="namalengkappengguna" name="namalengkappengguna" placeholder="Nama Lengkap"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Username</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="usernamepengguna" name="usernamepengguna" placeholder="Username"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="passwordpengguna" name="passwordpengguna" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">No.Handphone</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="handphonepengguna" name="handphonepengguna" placeholder="No.Handphone"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="emailpengguna" name="emailpengguna" placeholder="Email"/>
+                    </div>
+                </div>
+                <!-- <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Foto</label>
+                    <div class="col-sm-9">
+                        <input type="file"/>
+                    </div>
+                </div> -->
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="savetambahakses">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+    
+    var token = '<%= csrfToken %>'
+    var datasimpan = "";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+            }
+    });
+    
+    $(document).ready(function(){
+        var tableaplikasi = $('#tablepenguna').dataTable({
+            "processing":true,
+            "paging":true,
+            "bInfo":true,
+            "serverside":true,
+            "ajax":{
+                
+                "url":'/datatableaksespengguna',
+                "type":"POST",
+                "dataSrc":"",
+            },
+            "columns":[
+                {
+                    "data":"id_akses","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"nm_lengkap","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"username","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"status","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"nohandphone","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"email","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                {
+                    "data":"akses","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    }
+                },
+                // {
+                //     "data":null,"autoWidth":true,"render":function(data){
+                //         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                //     }
+                // },
+                {
+                    "data":null,"autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a class="fa fa-edit" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+                            '</div>'
+                    }
+                }
+                
+            ]
+        })
+    })
+
+   $('#savetambahakses').on('click',function(){
+        var formakses = $('#tambahaksespengguna');
+        var url = formakses.attr('action');
+        $(this).html('please wait ... ');
+        formakses.submit();
+   })
+</script>

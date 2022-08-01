@@ -1,0 +1,90 @@
+
+<div class="wrapper wrapper-content animated fadeInRight gray-bg" style="overflow: hidden; padding-bottom: 170px;">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="col-sm-12 col-md-12">
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h5 class="float-left"> Halaman Detail Surat Masuk</h5>
+                    </div>
+                    <div class="card-body">
+                        <form  method="post">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4">
+                                    <div class="card">
+                                        <div class="card-body" style="text-align: center;">
+                                            <div class="form-group">                      
+                                                <button class="btn w-60 float-center btn-primary" style="background-color: white; color: blue;"><i></i>Tampilakn</button>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn w-60 float-center btn-primary" style="background-color: white; color: yellowgreen;">Kembali</button>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-sm-8 col-md-8">
+                                    <div class="card">
+                                        <div class="card-body" style="text-align: left;">
+                                            <div class="modal-body">
+                                                <input type="hidden" name="_csrf" >
+                                                <div class="form-group">
+                                                    <label>Pengirim / Asal Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_Pengirim" name="f_Pengirim" value="<%= data_surat? data_surat.nama_instansi: (oldInput ? oldInput.nama_instansi: '') %> " placeholder="Pengirim / Asal Sura" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Nomor Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_Nomor_Surat" name="f_Nomor_Surat" placeholder="Nomor Surat" value="<%= data_surat? data_surat.no_surat: (oldInput ? oldInput.no_surat: '') %> ">
+                                                </div>
+                            
+                                                
+                                                <!-- <div class="form-group">
+                                                    <label>Nomor Agenda</label>
+                                                    <input type="text" class="form-control" disabled id="f_Nomor_Agenda" name="f_Nomor_Agenda" placeholder="Nomor Agenda" value="<%= data_surat? data_surat.nama_instansi: (oldInput ? oldInput.nama_instansi: '') %> ">
+                                                </div> -->
+                            
+                                                
+                                                <!-- <div class="form-group">
+                                                    <label>Kode Klasifikasi</label>
+                                                    <input type="text" class="form-control" disabled id="f_Kode_Klasifikasi" name="f_Kode_Klasifikasi" placeholder="Kode Klasifikasi" value="<%= data_surat? data_surat.nama_instans: (oldInput ? oldInput.nama_instans: '') %> ">
+                                                </div> -->
+                                                
+                                                <div class="form-group">
+                                                    <label>Tanggal Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_tgl_surat" name="f_tgl_surat" placeholder="Tanggal Surat" value="<%= data_surat? data_surat.tanggal_surat: (oldInput ? oldInput.tanggal_surat: '') %> ">
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label>Tanggal Diterima</label>
+                                                    <input type="text" class="form-control" disabled id="f_tgl_diterima" name="f_tgl_diterima" placeholder="Tanggal Diterima" value="<%= data_surat? data_surat.tanggal_masuk: (oldInput ? oldInput.tanggal_masuk: '') %> ">
+                                                </div>
+                                            
+                                                <!-- <div class="form-group">
+                                                    <label>Tujuan</label>
+                                                    <input type="text" class="form-control" disabled id="f_tujuan" name="f_tujuan" placeholder="Tujuan" >
+                                                </div> -->
+                            
+                                                <div class="form-group">
+                                                    <label>Isi Surat</label>
+                                                    <textarea  class="form-control" disabled id="f_Isi_Surat" name="f_Isi_Surat" placeholder="Isi Surat" value="<%= data_surat? data_surat.isi_surat: (oldInput ? oldInput.isi_surat: '') %> "></textarea>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label>Status Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_Status" name="f_Status" placeholder="Status" value="<%= data_surat? data_surat.status: (oldInput ? oldInput.status: '') %> ">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Catatan</label>
+                                                    <input type="text" class="form-control" disabled id="f_Catatan" name="f_Catatan" placeholder="Catatan" value="<%= data_surat? data_surat.catatan: (oldInput ? oldInput.catatan: '') %> ">
+                                                </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </form>  
+                    </div> 
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
