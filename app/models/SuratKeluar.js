@@ -61,6 +61,10 @@ const SuratKeluar = sequelize.define('suratkeluar',{
     proses_surat:{
         type:DataTypes.STRING,
         allowNull:true
+    },
+    asal_surat:{
+        type:DataTypes.STRING,
+        allowNull:true
     }
 },{
     indexes: [
@@ -74,15 +78,22 @@ const SuratKeluar = sequelize.define('suratkeluar',{
 async function Suratkeluar_add(vars){
 
     let datainsert={};
-    ('no_surat' in vars) ? datainsert.no_surat = vars.no_surat : null;
-    ('nama_instansi' in vars) ? datainsert.nama_instansi = vars.nama_instansi:null;
-    ('tanggal_masuk' in vars) ? datainsert.tanggal_masuk = vars.tanggal_masuk : null;
-    ('tanggal_surat' in vars) ? datainsert.tanggal_surat = vars.tanggal_surat : null;
-    ('nama_instansi2' in vars) ? datainsert.nama_instansi2 = vars.nama_instansi2 : null;
-    ('catatan' in vars) ? datainsert.catatan = vars.catatan : null;
-    ('isi_surat' in vars) ? datainsert.isi_surat = vars.isi_surat:null;
+    ('tujuan' in vars) ? datainsert.tujuan = vars.tujuan : null;
+    ('tanggal_surat' in vars) ? datainsert.tanggal_surat = vars.tanggal_surat:null;
+    ('tanggal_Diterima' in vars) ? datainsert.tanggal_Diterima = vars.tanggal_Diterima : null;
+    ('status' in vars) ? datainsert.status = vars.status : null;
     ('proses_surat' in vars) ? datainsert.proses_surat = vars.proses_surat:null;
+    ('no_surat' in vars) ? datainsert.no_surat = vars.no_surat : null;
+    ('no_agenda' in vars) ? datainsert.no_agenda = vars.no_agenda : null;
+    ('nama_instansi2' in vars) ? datainsert.nama_instansi2 = vars.nama_instansi2:null;
+    ('nama_instansi' in vars) ? datainsert.nama_instansi = vars.nama_instansi : null;
+    ('kode_klasifikasi' in vars) ? datainsert.kode_klasifikasi = vars.kode_klasifikasi : null;
+    ('Isi_surat' in vars) ? datainsert.Isi_surat = vars.Isi_surat : null;
+    ('file' in vars) ? datainsert.file = vars.file : null;
+    ('catatan' in vars) ? datainsert.catatan = vars.catatan:null;
+    ('asal_surat' in vars) ? datainsert.asal_surat = vars.asal_surat:null;
     console.log(datainsert);
+
     if(hlp.ObjNotEmpty(datainsert))
         return await SuratKeluar.create(datainsert);
 }
@@ -114,9 +125,6 @@ async function surat_get(vars){
     ('opt_groupby' in vars) ? data.group = vars.opt_groupby : null;
     ('opt_orderby' in vars) ? data.order = vars.opt_orderby : null;
     ('opt_where' in vars) ? data.where = vars.opt_where : null;
-
-    // ('userId' in vars) ? data.where.userId = vars.userId : null;
-    // ('email' in vars) ? data.where.email = vars.moduleId : null;
     let result = await SuratKeluar.findAll(data);
     console.log(result);
     return result;

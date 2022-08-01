@@ -99,7 +99,7 @@ router.get('/suratmasukedit', isAuth(), SuratMasukController.edit);
 
 
 router.get('/SuratKeluar/:surat_id', isAuth(), SuratKeluarController.list_keluar);
-router.post('/Masuk-keluar', isAuth(), SuratKeluarController.insertsuratkeluar);
+router.post('/keluar-add', isAuth(), SuratKeluarController.insertsuratkeluar);
 router.post('/datatableakSuratkeluar', isAuth(), SuratKeluarController.datatableSuratkeluar);
 router.get('/suratkeluar-delete/:surat_id', isAuth(), SuratKeluarController.delete);
 router.get('/Edit/:surat_id', isAuth(), SuratKeluarController.edit);

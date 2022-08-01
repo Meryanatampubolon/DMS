@@ -1,12 +1,10 @@
 const validator = require('validator');
 const User = require('../../models/User');
-const SuratMasuk = require('../../models/SuratKeluar');
+const SuratKeluar = require('../../models/SuratKeluar');
 const constant = require('../../../config/constant');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const hlp = require('../../helpers/helpers');
-const { SuratKeluar } = require('../../models/SuratKeluar');
-
 
 exports.list_keluar = (req, res, next) => {
     console.log(req.params.surat_id);
@@ -50,7 +48,7 @@ exports.delete = (req, res, next) => {
     SuratKeluar.SuratKeluar.destroy({ where: { surat_id: req.params.surat_id } })
         .then(result => {
             hlp.genAlert(req, { tipe: 'error', message: constant.MY_DATADELETE });
-            return res.redirect('/Dokumen/Suratmasuk');
+            return res.redirect('/Dokumen/SuratKeluar');
         })  
 
 };
@@ -58,7 +56,7 @@ exports.delete = (req, res, next) => {
 exports.datatableSuratkeluar=(req,res,next)=>{
     
     let select = {
-       opt_select:['surat_id','no_surat','isi_surat','tanggal_surat','tanggal_masuk','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat']
+       opt_select:['surat_id','no_surat','asal_surat','isi_surat','tanggal_surat','tanggal_Diterima','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat']
     }
     SuratKeluar.surat_get(select).then(result=>{
         console.log(res.json(result))
@@ -67,16 +65,17 @@ exports.datatableSuratkeluar=(req,res,next)=>{
  }
 
 exports.insertsuratkeluar = (req,res,next)=>{
-    console.log(req.body.f_Pengirim);
     let arraydata = {
        nama_instansi:req.body.f_Pengirim,
        no_surat:req.body.f_Nomor_Surat,
-       tanggal_masuk:req.body.f_tgl_masuk,
+       no_agenda:req.body.f_Nomor_Agenda,
+       kode_klasifikasi:req.body.f_Kode_Klasifikasi,
        tanggal_surat:req.body.f_tgl_surat,
-       nama_instansi2: req.body.f_nama_instansi,
-       catatan:req.body.f_catatan,
+       tanggal_diterima:req.body.f_tgl_diterima,
+       tujuan: req.body.f_tujuan,
+       catatan:req.body.f_Catatan,
        isi_surat:req.body.f_Isi_Surat,
-       proses_surat:req.body.f_ProsesSurat,
+      // proses_surat:req.body.f_ProsesSurat,
       // isi_surat:req.body.emailpengguna
     };
     console.log(arraydata);
@@ -84,8 +83,8 @@ exports.insertsuratkeluar = (req,res,next)=>{
       if(hasil)
       {
          let vars={
-            pages:'../pages/Suratmasuk',
-            pageTitle:'/Dokumen/Suratmasuk'
+            pages:'../pages/SuratKeluar',
+            pageTitle:'/Dokumen/SuratKeluar'
         }
         res.render('layouts/admin_layout',vars);
       } 
@@ -120,7 +119,6 @@ exports.edit = (req, res, next) => {
         Home: '/admin',
         AksesDokumen: '#'
     }
-
     SuratKeluar.SuratKeluar.findOne({ raw: true, where: { surat_id: req.params.surat_id } })
         .then(result => {
             let vars = {

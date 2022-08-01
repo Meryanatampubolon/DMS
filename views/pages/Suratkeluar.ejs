@@ -6,7 +6,7 @@
                 <p style="font-size: 1.2rem; color: black; font-weight: bold;">Rekap Surat Masuk</p>
             </div>
             <div class="card-header">
-                <a  data-toggle="modal" data-target="#modal-adduser" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
+                <a  data-toggle="modal" data-target="#modal-addSuratkelaur" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
             </div>
             <div class="card-body">
               
@@ -33,7 +33,7 @@
 </div>
 
 
-<div class="modal fade" id="modal-adduser">
+<div class="modal fade" id="modal-addSuratkelaur">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -42,29 +42,29 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form-pengguna" action="/Masuk_add" method="post">
+            <form id="formaddsuratkeluar" action="/keluar-add" method="post">
                 <div class="modal-body">
-                    <input type="hidden" name="_csrf" >
+                    <input type="hidden" name="_csrf"  value="<%= csrfToken %>" >
                     <div class="form-group">
                         <label>Pengirim / Asal Surat</label>
-                        <input type="text" class="form-control" id="f_Pengirim" name="Pengirim" placeholder="Pengirim / Asal Sura" >
+                        <input type="text" class="form-control" id="f_Pengirim" name="f_Pengirim" placeholder="Pengirim / Asal Sura" >
                     </div>
                     <div class="form-group">
                         <label>Nomor Surat</label>
-                        <input type="text" class="form-control" id="f_Nomor_Surat" name="NomorSurat" placeholder="Nomor Surat" >
+                        <input type="text" class="form-control" id="f_Nomor_Surat" name="f_Nomor_Surat" placeholder="Nomor Surat" >
                     </div>
                     <div class="form-group">
                         <label>Nomor Agenda</label>
-                        <input type="text" class="form-control" id="f_Nomor_Agenda" name="NomorAgenda" placeholder="Nomor Agenda" >
+                        <input type="text" class="form-control" id="f_Nomor_Agenda" name="f_Nomor_Agenda" placeholder="Nomor Agenda" >
                     </div>
                     <div class="form-group">
                         <label>Kode Klasifikasi</label>
-                        <input type="text" class="form-control" id="f_Kode_Klasifikasi" name="KodeKlasifikasi" placeholder="Kode Klasifikasi" >
+                        <input type="text" class="form-control" id="f_Kode_Klasifikasi" name="f_Kode_Klasifikasi" placeholder="Kode Klasifikasi" >
                     </div>
                     <div class="form-group">
-                        <label>Tanggal Masuk</label>
+                        <label>Tanggal Surat</label>
                         <div class="input-group date" id="id_4">
-                            <input type="text" class="form-control" required="">
+                            <input type="text" class="form-control" id="f_tgl_surat" name="f_tgl_surat" required="">
                             <div class="input-group-addon input-group-append">
                                 <div class="input-group-text">
                                     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
@@ -73,10 +73,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                    
-                        <label>Tanggal Masuk</label>
+                        <label>Tanggal Diterima</label>
                         <div class="input-group date" id="id_4">
-                            <input type="text" class="form-control" required="">
+                            <input type="text" class="form-control" id="f_tgl_diterima" name="f_tgl_diterima" required="">
                             <div class="input-group-addon input-group-append">
                                 <div class="input-group-text">
                                     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
@@ -86,29 +85,29 @@
                     </div>
                     <div class="form-group">
                         <label>Tujuan</label>
-                        <input type="text" class="form-control" id="f_tujuan" name="Tujuan" placeholder="Tujuan" >
+                        <input type="text" class="form-control" id="f_tujuan" name="f_tujuan" placeholder="Tujuan" >
                     </div>
                     <div class="form-group">
                         <label>Isi Surat</label>
-                        <textarea  class="form-control" id="f_Isi_Surat" name="IsiSurat" placeholder="Isi Surat" ></textarea>
+                        <textarea  class="form-control" id="f_Isi_Surat" name="f_Isi_Surat" placeholder="Isi Surat" ></textarea>
                     </div>
                     <div class="form-group">
                         <label>Catatan</label>
-                        <input type="text" class="form-control" id="f_Catatan" name="Catatan" placeholder="Catatan" >
+                        <input type="text" class="form-control" id="f_Catatan" name="f_Catatan" placeholder="Catatan" >
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>File Surat</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="validatedCustomFile" required>
                             <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                             <div class="invalid-feedback">Example invalid custom file feedback</div>
                           </div>
-                    </div>
+                    </div> -->
      
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" id="savetambahsuratkeluar" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -118,18 +117,24 @@
 </div>
 <script>
 
-
+    var token = '<%= csrfToken %>'
+    var datasimpan = "";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+            }
+    });
     $(document).ready(function(){
         var suratkeluar = $('#tabelsuratkeluar').dataTable({
             "processing":true,
             "paging":true,
             "bInfo":true,
             "serverside":true,
-            "ajax":{
-                "url":'/datatableakSuratkeluar',
-                "type":"POST",
-                "dataSrc":"",
-            },
+            // "ajax":{
+            //     "url":'/datatableakSuratkeluar',
+            //     "type":"POST",
+            //     "dataSrc":"",
+            // },
             "columns":[
                 {
                     "data":"surat_id","autoWidth":true,"render":function(data){
@@ -157,7 +162,7 @@
                     }
                 },
                 {
-                    "data":"tanggal_diterima","autoWidth":true,"render":function(data){
+                    "data":"tanggal_Diterima","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
@@ -168,19 +173,30 @@
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a class="fa fa-file" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+                            '</div>'
                     }
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-                            '<a class="fa fa-edit" style="padding-right:1rem"/>'+
-                            '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+                            '<a onclick="shwo_edit(\'' + data.surat_id + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+                            '<a href="/SuratKeluar/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                            '<a href="/suratkeluar-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
                             '</div>'
                     }
                 }
                 
             ]
         })
+    })
+
+    $('#savetambahsuratkeluar').on('click',function(){
+            var formakses = $('#formaddsuratkeluar');
+            var url = formakses.attr('action');
+            $(this).html('please wait ... ');
+            formakses.submit();
     })
 </script>

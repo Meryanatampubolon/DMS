@@ -20,4 +20,4 @@ Departemen.tDepartemen.sync();
 Instansi.sync();
 AksesPengguna.taksesaplikasi.sync();
 SuratMasuk.SuratMasuk.sync();
-SuratMasuk.SuratKeluar.sync();
+SuratKeluar.SuratKeluar.sync();
