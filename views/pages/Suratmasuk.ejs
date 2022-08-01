@@ -5,6 +5,9 @@
             <div class="card-header">
                 <p style="font-size: 1.2rem; color: black; font-weight: bold;">Rekap Surat Masuk</p>
             </div>
+            <div class="card-header">
+                <a  data-toggle="modal" data-target="#modal-adduser" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
+                </div>
             <div class="card-body">
                 <div class="mt-2">
                     <table id="tabelsuratmasuk" class="table" style="width: 100%;">
@@ -28,7 +31,181 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-adduser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title" class="modal-title">Form Surat Masuk</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="tambahasuratmasuk"  action="/Masuk-add" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="_csrf"value="<%= csrfToken %>" >
+                    <div class="form-group">
+                        <label>Nama Instansi</label>
+                        <input type="text" class="form-control" id="f_Pengirim" name="f_Pengirim" placeholder="Pengirim / Asal Sura" >
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Surat</label>
+                        <input type="text" class="form-control" id="f_Nomor_Surat" name="f_Nomor_Surat" placeholder="Nomor Surat" >
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_masuk" name="f_tgl_masuk" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_surat" name="f_tgl_surat" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>                
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Instansi</label>
+                        <textarea type="text" class="form-control" id="f_nama_instansi" name="f_nama_instansi" placeholder="Nama Instansi" ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Catatan</label>
+                        <input type="text" class="form-control" id="f_catatan" name="f_catatan" placeholder="Catatan" >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Isi Surat</label>
+                        <textarea  class="form-control" id="f_Isi_Surat" name="f_Isi_Surat" placeholder="Isi Surat" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Proses Surat</label>
+                        <select name="ProsesSurat" id="f_ProsesSurat"  name="f_ProsesSurat" class="form-control">
+                        <option value="new">New</option>               
+                        <option value="new2">New2</option>                                 
+                        </select>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>File Surat</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                          </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" id="savetambahsurat" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal" id="modal_edituser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title" class="modal-title">Form Surat Masuk</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="Editsuratmasuk"  method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="f_surat_id_edit" style="display:none;" name="f_surat_id_edit" placeholder="Surat ID" >
+                        <label>Nama Instansi</label>
+                        <input type="text" class="form-control" id="f_Pengirim_edit" name="f_Pengirim_edit" placeholder="Pengirim / Asal Sura" >
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Surat</label>
+                        <input type="text" class="form-control" id="f_Nomor_Surat_edit" name="f_Nomor_Surat_edit" placeholder="Nomor Surat" >
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_masuk_edit" name="f_tgl_masuk_edit" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_surat_edit" name="f_tgl_surat_edit" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>                
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Instansi</label>
+                        <textarea type="text" class="form-control" id="f_nama_instansi_edit" name="f_nama_instansi_edit" placeholder="Nama Instansi" ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Catatan</label>
+                        <input type="text" class="form-control" id="f_catatan_edit" name="f_catatan_edit" placeholder="Catatan" >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Isi Surat</label>
+                        <textarea  class="form-control" id="f_Isi_Surat_edit" name="f_Isi_Surat_edit" placeholder="Isi Surat" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Proses Surat</label>
+                        <select name="ProsesSurat" id="f_ProsesSurat_edit"  name="f_ProsesSurat_edit" class="form-control">
+                        <option value="new">New</option>               
+                        <option value="new2">New2</option>                                 
+                        </select>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>File Surat</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile_edit" required>
+                            <label class="custom-file-label" for="validatedCustomFile_edit">Choose file...</label>
+                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                          </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <input type="submit" id="simpan_edit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
+    var token = '<%= csrfToken %>'
+    var datasimpan = "";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+            }
+    });
+
 
     $(document).ready(function(){
         var suratmasuk = $('#tabelsuratmasuk').dataTable({
@@ -36,40 +213,40 @@
             "paging":true,
             "bInfo":true,
             "serverside":true,
-            // "ajax":{
+            "ajax":{
                 
-            //     "url":'/datatableaksespengguna',
-            //     "type":"POST",
-            //     "dataSrc":"",
-            // },
+                "url":'/datatableakSuratMasuk',
+                "type":"POST",
+                "dataSrc":"",
+            },
             "columns":[
                 {
-                    "data":"no","autoWidth":true,"render":function(data){
+                    "data":"surat_id","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"nomorsurat","autoWidth":true,"render":function(data){
+                    "data":"no_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"asalsurat","autoWidth":true,"render":function(data){
+                    "data":"asal_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"isisurat","autoWidth":true,"render":function(data){
+                    "data":"isi_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"tglsurat","autoWidth":true,"render":function(data){
+                    "data":"tanggal_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"tglterima","autoWidth":true,"render":function(data){
+                    "data":"tanggal_masuk","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
@@ -80,19 +257,76 @@
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a class="fa fa-file" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+                            '</div>'
                     }
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-                            '<a class="fa fa-edit" style="padding-right:1rem"/>'+
-                            '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+                            '<a onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+                            '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                            '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
                             '</div>'
                     }
                 }
                 
             ]
         })
+
+
+        
+        $('#savetambahsurat').on('click',function(){
+            var formakses = $('#tambahasuratmasuk');
+            var url = formakses.attr('action');
+            $(this).html('please wait ... ');
+            formakses.submit();
     })
+
+    $('#simpan_edit').on('click',function(){
+        $('#simpan_edit')
+        var formakses1 = $('#Editsuratmasuk');
+        var url = formakses1.attr('action');
+        $(this).html('please wait ... ');
+        formakses1.submit();
+        })
+
+    })
+
+    function shwo_edit(surat_id, nama_instansi, nama_instansi2,no_surat, tanggal_surat,tanggal_masuk, catatan, isi_surat, proses )
+    {
+
+      
+        $("#modal_edituser").modal('show');
+        $("#f_Pengirim_edit").val(nama_instansi );
+        $("#f_Nomor_Surat_edit").val(no_surat);
+        $("#f_tgl_masuk_edit").val(tanggal_masuk);
+        $("#f_tgl_surat_edit").val(tanggal_surat);
+        $("#f_nama_instansi_edit").val(nama_instansi2);
+        $("#f_catatan_edit").val(catatan);
+        $("#f_Isi_Surat_edit").val(isi_surat);
+        $("#f_surat_id_edit").val(surat_id);
+        document.getElementById("f_ProsesSurat_edit").value = proses;
+        $('#Editsuratmasuk').attr('action', '/Edit/'+ surat_id );
+       
+    }
+
+
+    // function simpan_edit()
+    // {
+    //     $('#savetambahsurat').on('click',function(){
+    //     var formakses = $('#tambahasuratmasuk');
+    //     var url = formakses.attr('action');
+    //     $(this).html('please wait ... ');
+    //     formakses.submit();
+    //     })
+
+    //     // var id=$("#f_surat_id_edit").val();
+    //     // var formakses = $('#Editsuratmasuk');
+    //     // var url = formakses.attr('action');
+    //     // $(this).html('please wait ... ');
+    //     // formakses.submit();
+    // }
 </script>

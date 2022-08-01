@@ -5,7 +5,11 @@
             <div class="card-header">
                 <p style="font-size: 1.2rem; color: black; font-weight: bold;">Rekap Surat Masuk</p>
             </div>
+            <div class="card-header">
+                <a  data-toggle="modal" data-target="#modal-adduser" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
+            </div>
             <div class="card-body">
+              
                 <div class="mt-2">
                     <table id="tabelsuratkeluar" class="table" style="width: 100%;">
                         <thead>
@@ -28,7 +32,92 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="modal-adduser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title" class="modal-title">Form Surat Keluar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form-pengguna" action="/Masuk_add" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="_csrf" >
+                    <div class="form-group">
+                        <label>Pengirim / Asal Surat</label>
+                        <input type="text" class="form-control" id="f_Pengirim" name="Pengirim" placeholder="Pengirim / Asal Sura" >
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Surat</label>
+                        <input type="text" class="form-control" id="f_Nomor_Surat" name="NomorSurat" placeholder="Nomor Surat" >
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Agenda</label>
+                        <input type="text" class="form-control" id="f_Nomor_Agenda" name="NomorAgenda" placeholder="Nomor Agenda" >
+                    </div>
+                    <div class="form-group">
+                        <label>Kode Klasifikasi</label>
+                        <input type="text" class="form-control" id="f_Kode_Klasifikasi" name="KodeKlasifikasi" placeholder="Kode Klasifikasi" >
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" id="id_4">
+                            <input type="text" class="form-control" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" id="id_4">
+                            <input type="text" class="form-control" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tujuan</label>
+                        <input type="text" class="form-control" id="f_tujuan" name="Tujuan" placeholder="Tujuan" >
+                    </div>
+                    <div class="form-group">
+                        <label>Isi Surat</label>
+                        <textarea  class="form-control" id="f_Isi_Surat" name="IsiSurat" placeholder="Isi Surat" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Catatan</label>
+                        <input type="text" class="form-control" id="f_Catatan" name="Catatan" placeholder="Catatan" >
+                    </div>
+                    <div class="form-group">
+                        <label>File Surat</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                          </div>
+                    </div>
+     
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <script>
+
 
     $(document).ready(function(){
         var suratkeluar = $('#tabelsuratkeluar').dataTable({
@@ -36,40 +125,39 @@
             "paging":true,
             "bInfo":true,
             "serverside":true,
-            // "ajax":{
-                
-            //     "url":'/datatableaksespengguna',
-            //     "type":"POST",
-            //     "dataSrc":"",
-            // },
+            "ajax":{
+                "url":'/datatableakSuratkeluar',
+                "type":"POST",
+                "dataSrc":"",
+            },
             "columns":[
                 {
-                    "data":"no","autoWidth":true,"render":function(data){
+                    "data":"surat_id","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"nomorsurat","autoWidth":true,"render":function(data){
+                    "data":"no_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"asalsurat","autoWidth":true,"render":function(data){
+                    "data":"asal_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"isisurat","autoWidth":true,"render":function(data){
+                    "data":"isi_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"tglsurat","autoWidth":true,"render":function(data){
+                    "data":"tanggal_surat","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },
                 {
-                    "data":"tglterima","autoWidth":true,"render":function(data){
+                    "data":"tanggal_diterima","autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
                     }
                 },

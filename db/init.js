@@ -7,8 +7,8 @@ const AksesPengguna = require('../app/models/AksesPengguna');
 const UserDepartemen = require('../app/models/UserDepartemen');
 const Departemen = require('../app/models/Departemen');
 const Instansi = require('../app/models/Instansi');
-
-
+const SuratMasuk = require('../app/models/SuratMasuk');
+const SuratKeluar = require('../app/models/SuratKeluar');
 
 
 User.tUser.sync();
@@ -19,3 +19,5 @@ UserDepartemen.tUserDepartemen.sync();
 Departemen.tDepartemen.sync();
 Instansi.sync();
 AksesPengguna.taksesaplikasi.sync();
+SuratMasuk.SuratMasuk.sync();
+SuratMasuk.SuratKeluar.sync();

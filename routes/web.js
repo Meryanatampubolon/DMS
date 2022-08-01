@@ -3,11 +3,13 @@ const router = express.Router();
 const PageController = require('../app/controllers/PageController');
 const AuthController = require('../app/controllers/AuthController');
 const UserController = require('../app/controllers/admin/UserController');
+const SuratMasukController = require('../app/controllers/admin/SuratMasukController');
 const ModuleController = require('../app/controllers/admin/ModuleController');
 const AksesPenggunaController = require('../app/controllers/AksesPenggunaController');
 const InstansiController = require('../app/controllers/admin/InstansiController');
 const DepartemenController = require('../app/controllers/admin/DepartemenController');
 const AksesDokumenController = require('../app/controllers/admin/AksesDokumenController');
+const SuratKeluarController = require('../app/controllers/admin/SuratKeluarController');
 
 
 
@@ -15,6 +17,8 @@ const AksesDokumenController = require('../app/controllers/admin/AksesDokumenCon
 const isAuth = require('../app/middlewares/isAuth');
 const canRegister = require('../app/middlewares/canRegister');
 const checkPermission = require('../app/middlewares/checkPermission');
+const { SuratMasuk } = require('../app/models/SuratMasuk');
+const { SuratKeluar } = require('../app/models/SuratKeluar');
 
 
 
@@ -86,10 +90,19 @@ router.get('/administrator', isAuth(), checkPermission('pm_administrator'), User
 router.get('/aksesdokumen', isAuth(), checkPermission('pm_administrator'), AksesDokumenController.list);
 router.get('/aksesdokumen-edit/:departemenId', isAuth(), checkPermission('pm_administrator'), AksesDokumenController.edit);
 
+router.get('/SuratMasuk/:surat_id', isAuth(), SuratMasukController.list_masuk);
+router.post('/Masuk-add', isAuth(), SuratMasukController.insertsuratmasuk);
+router.post('/datatableakSuratMasuk', isAuth(), SuratMasukController.datatableSuratMasuk);
+router.get('/suratmasuk-delete/:surat_id', isAuth(), SuratMasukController.delete);
+router.get('/Edit/:surat_id', isAuth(), SuratMasukController.edit);
+router.get('/suratmasukedit', isAuth(), SuratMasukController.edit);
 
 
+router.get('/SuratKeluar/:surat_id', isAuth(), SuratKeluarController.list_keluar);
+router.post('/Masuk-keluar', isAuth(), SuratKeluarController.insertsuratkeluar);
+router.post('/datatableakSuratkeluar', isAuth(), SuratKeluarController.datatableSuratkeluar);
+router.get('/suratkeluar-delete/:surat_id', isAuth(), SuratKeluarController.delete);
+router.get('/Edit/:surat_id', isAuth(), SuratKeluarController.edit);
+router.get('/suratkeluaredit', isAuth(), SuratKeluarController.edit);
 
-
-
-
-module.exports = router;
+module.exports = router;    
