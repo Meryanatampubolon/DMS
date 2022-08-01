@@ -1,11 +1,10 @@
-
 <div class="wrapper wrapper-content animated fadeInRight gray-bg" style="overflow: hidden; padding-bottom: 170px;">
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="col-sm-12 col-md-12">
                 <div class="card" style="margin-top: 2rem;">
                     <div class="card-header">
-                        <h5 class="float-left"> Halaman Detail Surat Keluar</h5>
+                        <h5 class="float-left"> Halaman Detail Surat Masuk</h5>
                     </div>
                     <div class="card-body">
                         <form  method="post">
@@ -15,9 +14,6 @@
                                         <div class="card-body" style="text-align: center;">
                                             <div class="form-group">                      
                                                 <button class="btn w-60 float-center btn-primary" style="background-color: white; color: blue;"><i></i>Tampilakn</button>
-                                            </div>
-                                            <div class="form-group">
-                                                <button class="btn w-60 float-center btn-primary" style="background-color: white; color: yellowgreen;">Download</button>
                                             </div>
                                             <div class="form-group">
                                                 <button class="btn w-60 float-center btn-primary" style="background-color: white; color: yellowgreen;">Kembali</button>
@@ -31,9 +27,6 @@
                                             <div class="modal-body">
                                                 <input type="hidden" name="_csrf" >
                                                 <div class="form-group">
-                                                    <button class="btn w-20 float-center btn-primary" style="background-color: white; color: yellowgreen;">Surat Keluar</button>
-                                                </div>
-                                                <div class="form-group">
                                                     <label>Pengirim / Asal Surat</label>
                                                     <input type="text" class="form-control" disabled id="f_Pengirim" name="f_Pengirim" value="<%= data_surat? data_surat.nama_instansi: (oldInput ? oldInput.nama_instansi: '') %> " placeholder="Pengirim / Asal Sura" >
                                                 </div>
@@ -43,16 +36,16 @@
                                                 </div>
                             
                                                 
-                                                <!-- <div class="form-group">
+                                                <div class="form-group">
                                                     <label>Nomor Agenda</label>
                                                     <input type="text" class="form-control" disabled id="f_Nomor_Agenda" name="f_Nomor_Agenda" placeholder="Nomor Agenda" value="<%= data_surat? data_surat.nama_instansi: (oldInput ? oldInput.nama_instansi: '') %> ">
                                                 </div> -->
                             
                                                 
-                                                <!-- <div class="form-group">
+                                                <div class="form-group">
                                                     <label>Kode Klasifikasi</label>
                                                     <input type="text" class="form-control" disabled id="f_Kode_Klasifikasi" name="f_Kode_Klasifikasi" placeholder="Kode Klasifikasi" value="<%= data_surat? data_surat.nama_instans: (oldInput ? oldInput.nama_instans: '') %> ">
-                                                </div> -->
+                                                </div>
                                                 
                                                 <div class="form-group">
                                                     <label>Tanggal Surat</label>
@@ -64,10 +57,10 @@
                                                     <input type="text" class="form-control" disabled id="f_tgl_diterima" name="f_tgl_diterima" placeholder="Tanggal Diterima" value="<%= data_surat? data_surat.tanggal_masuk: (oldInput ? oldInput.tanggal_masuk: '') %> ">
                                                 </div>
                                             
-                                                <!-- <div class="form-group">
+                                                 <div class="form-group">
                                                     <label>Tujuan</label>
                                                     <input type="text" class="form-control" disabled id="f_tujuan" name="f_tujuan" placeholder="Tujuan" >
-                                                </div> -->
+                                                </div>
                             
                                                 <div class="form-group">
                                                     <label>Isi Surat</label>
@@ -86,24 +79,6 @@
                                         </div>
                                     </div> 
                                 </div>
-                              
-                            </div>
-                            <div class="col-sm-8 col-md-8">
-                                <table id="tabelsiposisi" class="table" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nomor Surat</th>
-                                            <th>Asal Surat</th>
-                                            <th>Isi Surat</th>
-                                            <th>Tgl Surat</th>
-                                            <th>Tgl Diterima</th>
-                                            <th>Status</th>
-                                            <th>file</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                </table>
                             </div>
                         </form>  
                     </div> 

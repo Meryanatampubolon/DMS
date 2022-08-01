@@ -89,20 +89,24 @@
                     </div>
                     <div class="form-group">
                         <label>Isi Surat</label>
-                        <textarea  class="form-control" id="f_Isi_Surat" name="f_Isi_Surat" placeholder="Isi Surat" ></textarea>
+                        <input  class="form-control" id="f_Isi_Surat" name="f_Isi_Surat" placeholder="Isi Surat" >
                     </div>
                     <div class="form-group">
                         <label>Catatan</label>
                         <input type="text" class="form-control" id="f_Catatan" name="f_Catatan" placeholder="Catatan" >
                     </div>
-                    <!-- <div class="form-group">
-                        <label>File Surat</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                            <div class="invalid-feedback">Example invalid custom file feedback</div>
-                          </div>
-                    </div> -->
+                    <div class="form-group">
+                        <section class="pb-4">
+                            <div class="bg-white border rounded-5">
+                                <section class="w-100 p-4 d-flex justify-content-center pb-4">
+                                    <div style="width: 22rem;">
+                                    <label class="form-label" for="customFile">File Surat</label>
+                                    <input type="file" class="form-control" id="customFile_keluar" name="customFile_keluar" autocompleted="">
+                                    </div>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
      
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -130,45 +134,87 @@
             "paging":true,
             "bInfo":true,
             "serverside":true,
-            // "ajax":{
-            //     "url":'/datatableakSuratkeluar',
-            //     "type":"POST",
-            //     "dataSrc":"",
-            // },
+            "ajax":{
+                "url":'/datatableakSuratkeluar',
+                "type":"POST",
+                "dataSrc":"",
+            },
             "columns":[
                 {
                     "data":"surat_id","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data == null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
                     }
                 },
                 {
                     "data":"no_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data == null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
                     }
                 },
                 {
-                    "data":"asal_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"nama_instansi","autoWidth":true,"render":function(data){
+                        if(data == null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
                     }
                 },
                 {
                     "data":"isi_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data == null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
                     }
                 },
                 {
                     "data":"tanggal_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data == null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
                     }
                 },
                 {
                     "data":"tanggal_Diterima","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data == null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
                     }
                 },
                 {
                     "data":"status","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data == null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
                     }
                 },
                 {

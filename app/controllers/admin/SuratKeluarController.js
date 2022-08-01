@@ -71,12 +71,11 @@ exports.insertsuratkeluar = (req,res,next)=>{
        no_agenda:req.body.f_Nomor_Agenda,
        kode_klasifikasi:req.body.f_Kode_Klasifikasi,
        tanggal_surat:req.body.f_tgl_surat,
-       tanggal_diterima:req.body.f_tgl_diterima,
+       tanggal_Diterima:req.body.f_tgl_diterima,
        tujuan: req.body.f_tujuan,
        catatan:req.body.f_Catatan,
-       isi_surat:req.body.f_Isi_Surat,
-      // proses_surat:req.body.f_ProsesSurat,
-      // isi_surat:req.body.emailpengguna
+       Isi_surat:req.body.f_Isi_Surat,
+       file:req.body.customFile_keluar
     };
     console.log(arraydata);
     SuratKeluar.Suratkeluar_add(arraydata).then(hasil=>{
@@ -104,7 +103,9 @@ exports.edit = (req, res, next) => {
         nama_instansi2: req.body.f_nama_instansi_edit,
         catatan:req.body.f_catatan_edit,
         isi_surat:req.body.f_Isi_Surat_edit,
-        proses_surat:req.body.f_ProsesSurat_edit
+        proses_surat:req.body.f_ProsesSurat_edit,
+        file:req.body.customFile_keluar
+        
      };
     // kita pakai md5 supaya bisa dibaca apakah di user List terdeteksi sebagai default password atau belum    
     SuratMasuk.SuratMasuk_edit(arraydata)
