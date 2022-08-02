@@ -11,8 +11,7 @@ const hlp = require('../../helpers/helpers');
 
 
 exports.list_masuk = (req, res, next) => {
-    console.log(req.params.surat_id);
-    console.log(req.body.surat_id);
+
     if (req.method == 'POST') {
         SuratMasuk.SuratMasuk.findOne({ where: { surat_id: req.body.surat_id } }).then(result => {
         });
@@ -63,13 +62,12 @@ exports.datatableSuratMasuk=(req,res,next)=>{
        opt_select:['surat_id','no_surat','asal_surat','isi_surat','tanggal_surat','tanggal_masuk','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat']
     }
      SuratMasuk.surat_get(select).then(result=>{
-        console.log(res.json(result))
          return res.json(result)
      })
  }
 
 exports.insertsuratmasuk = (req,res,next)=>{
-    console.log(req.body.f_Pengirim);
+    
     let arraydata = {
        nama_instansi:req.body.f_Pengirim,
        no_surat:req.body.f_Nomor_Surat,
@@ -79,9 +77,10 @@ exports.insertsuratmasuk = (req,res,next)=>{
        catatan:req.body.f_catatan,
        isi_surat:req.body.f_Isi_Surat,
        proses_surat:req.body.f_ProsesSurat,
+       status:req.body.f_ProsesSurat_edit
       // isi_surat:req.body.emailpengguna
     };
-    console.log(arraydata);
+    
     SuratMasuk.Suratmasuk_add(arraydata).then(hasil=>{
       if(hasil)
       {
@@ -97,7 +96,6 @@ exports.insertsuratmasuk = (req,res,next)=>{
 };
 
 exports.edit = (req, res, next) => {
-    console.log(req.body.f_surat_id_edit)
     let arraydata = {
         surat_id:req.body.f_surat_id_edit,
         nama_instansi:req.body.f_Pengirim_edit,
@@ -107,32 +105,30 @@ exports.edit = (req, res, next) => {
         nama_instansi2: req.body.f_nama_instansi_edit,
         catatan:req.body.f_catatan_edit,
         isi_surat:req.body.f_Isi_Surat_edit,
-        proses_surat:req.body.f_ProsesSurat_edit
+        proses_surat:req.body.f_ProsesSurat_edit,
+        status:req.body.f_ProsesSurat_edit,
+        pengirim_edit:req.body.f_Pengirim_edit
      };
+
+     let breadcrumbs = {
+                Home: '/admin',
+                AksesDokumen: '#'
+            }
+     
     // kita pakai md5 supaya bisa dibaca apakah di user List terdeteksi sebagai default password atau belum    
     SuratMasuk.SuratMasuk_edit(arraydata)
         .then(r => {
             hlp.genAlert(req, { tipe: 'error', message: constant.MY_USERPASSWORDCHANGED });
-            return res.redirect('back');
-        });
-};
-
-exports.edit = (req, res, next) => {
-    let breadcrumbs = {
-        Home: '/admin',
-        AksesDokumen: '#'
-    }
-
-    SuratMasuk.SuratMasuk.findOne({ raw: true, where: { surat_id: req.params.surat_id } })
-        .then(result => {
+        SuratMasuk.SuratMasuk.findOne({raw:true,where:{surat_id:req.params.surat_id}}).then(result=>{
             let vars = {
                 q_departemen: result,
                 breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
                 menu_pengaturan: true,
-                pages: '../admin/aksesdokumen_edit',
+                pages: '../pages/SuratMasuk',
                 pageTitle: 'Pengaturan Akses Pengajuan dan Disposisi'
             };
-            res.render('layouts/admin_layout', vars);
+            return res.render('layouts/admin_layout',vars);
+        })
+            
         });
-
 };

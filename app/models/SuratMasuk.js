@@ -90,15 +90,16 @@ async function Suratmasuk_add(vars){
 async function SuratMasuk_edit(vars) {
     let data = {};
     let vwhere = {};
-    ('surat_id' in vars) ? vwhere.userId = vars.surat_id : null;
-    ('no_surat' in vars) ? datainsert.no_surat = vars.no_surat : null;
-    ('nama_instansi' in vars) ? datainsert.nama_instansi = vars.nama_instansi:null;
-    ('tanggal_masuk' in vars) ? datainsert.tanggal_masuk = vars.tanggal_masuk : null;
-    ('tanggal_surat' in vars) ? datainsert.tanggal_surat = vars.tanggal_surat : null;
-    ('nama_instansi2' in vars) ? datainsert.nama_instansi2 = vars.nama_instansi2 : null;
-    ('catatan' in vars) ? datainsert.catatan = vars.catatan : null;
-    ('isi_surat' in vars) ? datainsert.isi_surat = vars.isi_surat:null;
-    ('proses_surat' in vars) ? datainsert.proses_surat = vars.proses_surat:null;
+    ('surat_id' in vars) ? vwhere.surat_id = vars.surat_id : null;
+    ('no_surat' in vars) ? data.no_surat = vars.no_surat : null;
+    ('tanggal_masuk' in vars) ? data.tanggal_masuk = vars.tanggal_masuk : null;
+    ('tanggal_surat' in vars) ? data.tanggal_surat = vars.tanggal_surat : null;
+    ('nama_instansi2' in vars) ? data.nama_instansi2 = vars.nama_instansi2 : null;
+    ('catatan' in vars) ? data.catatan = vars.catatan : null;
+    ('isi_surat' in vars) ? data.isi_surat = vars.isi_surat:null;
+    ('proses_surat' in vars) ? data.proses_surat = vars.proses_surat:null;
+    ('nama_instansi' in vars) ? data.nama_instansi = vars.nama_instansi : null;
+    ('status' in vars) ? data.status = vars.status : null;
     if (hlp.ObjNotEmpty(vwhere)) {
         return await SuratMasuk.update(data, { where: vwhere });
     }

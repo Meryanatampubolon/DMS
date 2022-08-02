@@ -14,6 +14,7 @@ const SuratKeluarController = require('../app/controllers/admin/SuratKeluarContr
 
 
 
+
 const isAuth = require('../app/middlewares/isAuth');
 const canRegister = require('../app/middlewares/canRegister');
 const checkPermission = require('../app/middlewares/checkPermission');
@@ -94,15 +95,13 @@ router.get('/SuratMasuk/:surat_id', isAuth(), SuratMasukController.list_masuk);
 router.post('/Masuk-add', isAuth(), SuratMasukController.insertsuratmasuk);
 router.post('/datatableakSuratMasuk', isAuth(), SuratMasukController.datatableSuratMasuk);
 router.get('/suratmasuk-delete/:surat_id', isAuth(), SuratMasukController.delete);
-router.get('/Edit/:surat_id', isAuth(), SuratMasukController.edit);
-router.get('/suratmasukedit', isAuth(), SuratMasukController.edit);
+router.post('/Edit/:surat_id', isAuth(), SuratMasukController.edit);
 
 
 router.get('/SuratKeluar/:surat_id', isAuth(), SuratKeluarController.list_keluar);
 router.post('/keluar-add', isAuth(), SuratKeluarController.insertsuratkeluar);
 router.post('/datatableakSuratkeluar', isAuth(), SuratKeluarController.datatableSuratkeluar);
 router.get('/suratkeluar-delete/:surat_id', isAuth(), SuratKeluarController.delete);
-router.get('/Edit/:surat_id', isAuth(), SuratKeluarController.edit);
-router.get('/suratkeluaredit', isAuth(), SuratKeluarController.edit);
+router.post('/Edit-keluar/:surat_id', isAuth(), SuratKeluarController.edit_keluar);
 
 module.exports = router;    
