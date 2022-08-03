@@ -54,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
+
 // required for csurf
 app.use(session({
     resave: true,
@@ -83,6 +84,7 @@ app.use((req, res, next) => {
         res.locals.constant[key] = constant[key]
     });
     res.locals.hlp = hlp;
+    res.locals.uploadPath = path.join(__dirname, 'public/upload');
     next();
 });
 

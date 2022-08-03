@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 const PageController = require('../app/controllers/PageController');
 const AuthController = require('../app/controllers/AuthController');
@@ -11,8 +12,7 @@ const DepartemenController = require('../app/controllers/admin/DepartemenControl
 const AksesDokumenController = require('../app/controllers/admin/AksesDokumenController');
 const SuratKeluarController = require('../app/controllers/admin/SuratKeluarController');
 
-
-
+const UploadSample = require('../app/controllers/UploadSample');
 
 
 const isAuth = require('../app/middlewares/isAuth');
@@ -20,6 +20,22 @@ const canRegister = require('../app/middlewares/canRegister');
 const checkPermission = require('../app/middlewares/checkPermission');
 const { SuratMasuk } = require('../app/models/SuratMasuk');
 const { SuratKeluar } = require('../app/models/SuratKeluar');
+
+// untuk windows mungkin perlu disesuaikan tanda "/" atau "\"
+const uploadPath = path.join(__dirname, '../public/upload');
+
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadPath);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname)
+    }
+});
+const upload = multer({ storage: storage });
+
 
 
 
@@ -103,5 +119,14 @@ router.post('/keluar-add', isAuth(), SuratKeluarController.insertsuratkeluar);
 router.post('/datatableakSuratkeluar', isAuth(), SuratKeluarController.datatableSuratkeluar);
 router.get('/suratkeluar-delete/:surat_id', isAuth(), SuratKeluarController.delete);
 router.post('/Edit-keluar/:surat_id', isAuth(), SuratKeluarController.edit_keluar);
+
+
+
+router.get('/upload', isAuth(), UploadSample.index);
+// filename adalah nama komponen "file" didalam view
+router.post('/upload', isAuth(), upload.single('filename'), UploadSample.index);
+
+
+
 
 module.exports = router;    
