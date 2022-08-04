@@ -18,7 +18,7 @@ const SuratMasuk = sequelize.define('suratmasuk',{
         type:DataTypes.STRING,
         allowNull:true
     },
-    asal_surat:{
+    filename:{
         type:DataTypes.STRING,
         allowNull:true
     },
@@ -82,6 +82,7 @@ async function Suratmasuk_add(vars){
     ('catatan' in vars) ? datainsert.catatan = vars.catatan : null;
     ('isi_surat' in vars) ? datainsert.isi_surat = vars.isi_surat:null;
     ('proses_surat' in vars) ? datainsert.proses_surat = vars.proses_surat:null;
+    ('filename' in vars) ? datainsert.filename = vars.filename: null;
     console.log(datainsert);
     if(hlp.ObjNotEmpty(datainsert))
         return await SuratMasuk.create(datainsert);
@@ -98,7 +99,8 @@ async function SuratMasuk_edit(vars) {
     ('catatan' in vars) ? data.catatan = vars.catatan : null;
     ('isi_surat' in vars) ? data.isi_surat = vars.isi_surat:null;
     ('proses_surat' in vars) ? data.proses_surat = vars.proses_surat:null;
-    ('nama_instansi' in vars) ? data.nama_instansi = vars.pengirim_edit : null;
+    ('nama_instansi' in vars) ? data.nama_instansi = vars.nama_instansi : null;
+    ('status' in vars) ? data.status = vars.status : null;
     if (hlp.ObjNotEmpty(vwhere)) {
         return await SuratMasuk.update(data, { where: vwhere });
     }
@@ -118,7 +120,6 @@ async function surat_get(vars){
     // ('userId' in vars) ? data.where.userId = vars.userId : null;
     // ('email' in vars) ? data.where.email = vars.moduleId : null;
     let result = await SuratMasuk.findAll(data);
-    console.log(result);
     return result;
 }
 

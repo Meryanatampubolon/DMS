@@ -27,7 +27,7 @@
         </div>
     </div>
 </div>
-
+<!-- 
 <script>
 
     $(document).ready(function(){
@@ -36,58 +36,111 @@
             "paging":true,
             "bInfo":true,
             "serverside":true,
-            // "ajax":{
+            "ajax":{
                 
-            //     "url":'/datatableaksespengguna',
-            //     "type":"POST",
-            //     "dataSrc":"",
-            // },
+                "url":'/datatableDisposisi',
+                "type":"POST",
+                "dataSrc":"",
+            },
             "columns":[
-                {
-                    "data":"no","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+            {
+                    "data":"surat_id","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"nomorsurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"no_surat","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"asalsurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"nama_instansi","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"isisurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"isi_surat","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"tglsurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"tanggal_surat","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"tglterima","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"tanggal_masuk","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":"status","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
-                    }
-                },
-                {
-                    "data":null,"autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data != null)
+                        {
+                            if(data == '1')
+                            {
+                                return '<div style="text-align: left; font-size: 12px; width: 100%;">Di Teruskan / Disposisi</div>'
+                            }
+                            else if(data == '2'){
+                                return '<div style="text-align: left; font-size: 12px; width: 100%;">Di Arsipkan</div>'   
+                            }
+                           
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-                            '<a class="fa fa-edit" style="padding-right:1rem"/>'+
-                            '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-file" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+                            '</div>'
+                    }
+                },
+                {
+                    "data":null,"autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+                            '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                            '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
                             '</div>'
                     }
                 }
@@ -95,4 +148,4 @@
             ]
         })
     })
-</script>
+</script> -->

@@ -56,10 +56,10 @@ exports.delete = (req, res, next) => {
 exports.datatableSuratkeluar=(req,res,next)=>{
     
     let select = {
-       opt_select:['surat_id','no_surat','asal_surat','isi_surat','tanggal_surat','tanggal_Diterima','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat']
+       opt_select:['surat_id','no_surat','asal_surat','isi_surat','tanggal_surat','tanggal_Diterima','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat','kode_klasifikasi', 'no_agenda', 'tujuan']
     }
     SuratKeluar.surat_get(select).then(result=>{
-        console.log(res.json(result))
+        
          return res.json(result)
      })
  }
@@ -71,12 +71,11 @@ exports.insertsuratkeluar = (req,res,next)=>{
        no_agenda:req.body.f_Nomor_Agenda,
        kode_klasifikasi:req.body.f_Kode_Klasifikasi,
        tanggal_surat:req.body.f_tgl_surat,
-       tanggal_diterima:req.body.f_tgl_diterima,
+       tanggal_Diterima:req.body.f_tgl_diterima,
        tujuan: req.body.f_tujuan,
        catatan:req.body.f_Catatan,
-       isi_surat:req.body.f_Isi_Surat,
-      // proses_surat:req.body.f_ProsesSurat,
-      // isi_surat:req.body.emailpengguna
+       Isi_surat:req.body.f_Isi_Surat,
+       file:req.body.customFile_keluar
     };
     console.log(arraydata);
     SuratKeluar.Suratkeluar_add(arraydata).then(hasil=>{
@@ -93,22 +92,46 @@ exports.insertsuratkeluar = (req,res,next)=>{
     })
 };
 
-exports.edit = (req, res, next) => {
+
+
+exports.edit_keluar = (req, res, next) => {
+    console.log(req);
     let arraydata = {
         surat_id:req.body.f_surat_id_edit,
         nama_instansi:req.body.f_Pengirim_edit,
         no_surat:req.body.f_Nomor_Surat_edit,
-        tanggal_masuk:req.body.f_tgl_masuk_edit,
+        no_agenda:req.body.f_Nomor_Agenda_edit,
+        kode_klasifikasi:req.body.f_Kode_Klasifikasi_edit,
         tanggal_surat:req.body.f_tgl_surat_edit,
-        nama_instansi2: req.body.f_nama_instansi_edit,
-        catatan:req.body.f_catatan_edit,
-        isi_surat:req.body.f_Isi_Surat_edit,
-        proses_surat:req.body.f_ProsesSurat_edit
+        tanggal_Diterima:req.body.f_tgl_diterima_edit,
+        tujuan: req.body.f_tujuan_edit,
+        catatan:req.body.f_Catatan_edit,
+        Isi_surat:req.body.f_Isi_Surat_edit,
+        file:req.body.customFile_surat_edit
      };
+
+     let breadcrumbs = {
+                Home: '/admin',
+                AksesDokumen: '#'
+            }
+     
     // kita pakai md5 supaya bisa dibaca apakah di user List terdeteksi sebagai default password atau belum    
-    SuratMasuk.SuratMasuk_edit(arraydata)
+    SuratKeluar.Suratkeluar_edit(arraydata)
         .then(r => {
             hlp.genAlert(req, { tipe: 'error', message: constant.MY_USERPASSWORDCHANGED });
-            return res.redirect('back');
+        SuratKeluar.SuratKeluar.findOne({raw:true,where:{surat_id:req.params.surat_id}}).then(result=>{
+            let vars = {
+                
+                q_departemen: result,
+                breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
+                menu_pengaturan: true,
+                pages: '../pages/SuratKeluar',
+                pageTitle: 'Pengaturan Akses Pengajuan dan Disposisi',
+                
+            };
+            return res.render('layouts/admin_layout',vars);
+          
+        })
+            
         });
 };

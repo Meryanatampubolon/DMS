@@ -40,9 +40,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="tambahasuratmasuk"  action="/Masuk-add" method="post">
+            <form id="tambahasuratmasuk"  action="/Masuk-add/?_csrf=<%= csrfToken%>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="_csrf"value="<%= csrfToken %>" >
+                    
                     <div class="form-group">
                         <label>Nama Instansi</label>
                         <input type="text" class="form-control" id="f_Pengirim" name="f_Pengirim" placeholder="Pengirim / Asal Sura" >
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Tanggal Masuk</label>
+                        <label>Tanggal Keluar</label>
                         <div class="input-group date" >
                             <input type="text" class="form-control" id="f_tgl_surat" name="f_tgl_surat" required="">
                             <div class="input-group-addon input-group-append">
@@ -89,19 +89,23 @@
                     </div>
                     <div class="form-group">
                         <label>Proses Surat</label>
-                        <select name="ProsesSurat" id="f_ProsesSurat"  name="f_ProsesSurat" class="form-control">
-                        <option value="new">New</option>               
-                        <option value="new2">New2</option>                                 
+                        <select id="f_ProsesSurat"  name="f_ProsesSurat" class="form-control">
+                            <option value="1">Di Teruskan/ Disposisi</option>               
+                            <option value="2">Di Arsipkan</option>                                    
                         </select>
                     </div>
-                    <!-- <div class="form-group">
-                        <label>File Surat</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                            <div class="invalid-feedback">Example invalid custom file feedback</div>
-                          </div>
-                    </div> -->
+                    <div class="form-group">
+                        <section class="pb-4">
+                            <div class="bg-white border rounded-5">
+                            <section class="w-100 p-4 d-flex justify-content-center pb-4">
+                                <div style="width: 22rem;">
+                                <label class="form-label" for="customFile_surat">File Surat</label>
+                                <input type="file" class="form-control" id="customFile_surat" name="customFile_surat">
+                                </div>
+                            </section>     
+                            </div>
+                        </section>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -148,7 +152,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Tanggal Masuk</label>
+                        <label>Tanggal Keluar</label>
                         <div class="input-group date" >
                             <input type="text" class="form-control" id="f_tgl_surat_edit" name="f_tgl_surat_edit" required="">
                             <div class="input-group-addon input-group-append">
@@ -174,23 +178,28 @@
                     </div>
                     <div class="form-group">
                         <label>Proses Surat</label>
-                        <select name="ProsesSurat" id="f_ProsesSurat_edit"  name="f_ProsesSurat_edit" class="form-control">
-                        <option value="new">New</option>               
-                        <option value="new2">New2</option>                                 
+                        
+                        <select id="f_ProsesSurat_edit"  name="f_ProsesSurat_edit" class="form-control">
+                            <option value="1">Di Teruskan/ Disposisi</option>               
+                            <option value="2">Di Arsipkan</option>                                 
                         </select>
                     </div>
-                    <!-- <div class="form-group">
-                        <label>File Surat</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="validatedCustomFile_edit" required>
-                            <label class="custom-file-label" for="validatedCustomFile_edit">Choose file...</label>
-                            <div class="invalid-feedback">Example invalid custom file feedback</div>
-                          </div>
-                    </div> -->
+                    <div class="form-group">
+                        <section class="pb-4">
+                            <div class="bg-white border rounded-5">
+                            <section class="w-100 p-4 d-flex justify-content-center pb-4">
+                                <div style="width: 22rem;">
+                                <label class="form-label" for="customFile_surat">File Surat</label>
+                                <input type="file" class="form-control" id="customFile_surat">
+                                </div>
+                            </section>     
+                            </div>
+                        </section>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <input type="submit" id="simpan_edit" class="btn btn-primary">Simpan</button>
+                    <input type="submit" id="simpan_edit" class="btn btn-primary"></button>
                 </div>
             </form>
         </div>
@@ -222,44 +231,93 @@
             "columns":[
                 {
                     "data":"surat_id","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":"no_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"asal_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"nama_instansi","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":"isi_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":"tanggal_surat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":"tanggal_masuk","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":"status","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        if(data != null)
+                        {
+                            if(data == '1')
+                            {
+                                return '<div style="text-align: left; font-size: 12px; width: 100%;">Di Teruskan / Disposisi</div>'
+                            }
+                            else if(data == '2'){
+                                return '<div style="text-align: left; font-size: 12px; width: 100%;">Di Arsipkan</div>'   
+                            }
+                           
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-                            '<a class="fa fa-file" style="padding-right:1rem"/>'+
-                            '<a class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-file" style="padding-right:1rem" onclick="bukafile(\''+data.filename+'\');return false"/>'+
+                            '<a class="fa fa-file-arrow-down" style="padding-right:1rem" onclick="downloadfile(\''+data.filename+'\');return false" />'+
                             '</div>'
                     }
                 },
@@ -297,8 +355,6 @@
 
     function shwo_edit(surat_id, nama_instansi, nama_instansi2,no_surat, tanggal_surat,tanggal_masuk, catatan, isi_surat, proses )
     {
-
-      
         $("#modal_edituser").modal('show');
         $("#f_Pengirim_edit").val(nama_instansi );
         $("#f_Nomor_Surat_edit").val(no_surat);
@@ -327,4 +383,14 @@
     //     // $(this).html('please wait ... ');
     //     // formakses.submit();
     // }
+    function bukafile(testfile)
+    {
+        
+        window.open("/pdf/"+testfile,"_BLANK","location=yes,height=570,width=520,scrollbars=yes,status=yes");        
+    }
+
+    function downloadfile(filename)
+    {
+        window.open("/downloadpdf/"+filename,"_BLANK");
+    }
 </script>
