@@ -16,7 +16,7 @@ const querystring = require('querystring');
 const { response } = require('express');
 const storage = Multer.diskStorage({
     destination:(req,file,cb)=>{
-       var dir = './public/suratmasuk/'
+       var dir = './dokument/suratmasuk/'
        if(!fs.existsSync(dir))
        {
         fs.mkdirSync(dir);
