@@ -11,6 +11,7 @@ const InstansiController = require('../app/controllers/admin/InstansiController'
 const DepartemenController = require('../app/controllers/admin/DepartemenController');
 const AksesDokumenController = require('../app/controllers/admin/AksesDokumenController');
 const SuratKeluarController = require('../app/controllers/admin/SuratKeluarController');
+// const pdfserviceController = require('../app/controllers/admin/pdfservice');
 
 const UploadSample = require('../app/controllers/UploadSample');
 
@@ -22,7 +23,9 @@ const { SuratMasuk } = require('../app/models/SuratMasuk');
 const { SuratKeluar } = require('../app/models/SuratKeluar');
 
 // untuk windows mungkin perlu disesuaikan tanda "/" atau "\"
-const uploadPath = path.join(__dirname, '../public/upload');
+// const uploadPath = path.join(__dirname, '../public/upload');
+
+// const path = path.join(__dirname, '../public/upload');
 
 
 const multer = require('multer');
@@ -35,6 +38,8 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage });
+
+
 
 
 
@@ -122,11 +127,13 @@ router.post('/Edit-keluar/:surat_id', isAuth(), SuratKeluarController.edit_kelua
 
 
 
+
+
 router.get('/upload', isAuth(), UploadSample.index);
 // filename adalah nama komponen "file" didalam view
-router.post('/upload', isAuth(), upload.single('filename'), UploadSample.index);
+ router.post('/upload', isAuth(), upload.single('filename'), UploadSample.index);
 
+router.get('/pdf/:namasurat',isAuth(),SuratMasukController.ambildirectory)
 
-
-
+router.get('/downloadpdf/:namasurat',isAuth(),SuratMasukController.downloadfilepdf)
 module.exports = router;    

@@ -8,6 +8,30 @@ const constant = require('../../../config/constant');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const hlp = require('../../helpers/helpers');
+const Multer = require('multer')
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const querystring = require('querystring');
+const { response } = require('express');
+
+const storage = Multer.diskStorage({
+    destination:(req,file,cb)=>{
+       var dir = './dokument/suratmasuk/'
+       if(!fs.existsSync(dir))
+       {
+        fs.mkdirSync(dir);
+       }
+       cb(null,dir)
+
+
+    },
+    filename:function(req,file,cb){
+        cb(null,file.originalname)
+    }
+})
+const upload = Multer({storage:storage}).array("customFile_surat",12);
+
 
 
 exports.list_masuk = (req, res, next) => {
@@ -59,7 +83,7 @@ exports.delete = (req, res, next) => {
 exports.datatableSuratMasuk=(req,res,next)=>{
     
     let select = {
-       opt_select:['surat_id','no_surat','asal_surat','isi_surat','tanggal_surat','tanggal_masuk','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat']
+       opt_select:['surat_id','no_surat','isi_surat','tanggal_surat','tanggal_masuk','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat', 'file']
     }
      SuratMasuk.surat_get(select).then(result=>{
          return res.json(result)
@@ -67,33 +91,87 @@ exports.datatableSuratMasuk=(req,res,next)=>{
  }
 
 exports.insertsuratmasuk = (req,res,next)=>{
-    
-    let arraydata = {
-       nama_instansi:req.body.f_Pengirim,
-       no_surat:req.body.f_Nomor_Surat,
-       tanggal_masuk:req.body.f_tgl_masuk,
-       tanggal_surat:req.body.f_tgl_surat,
-       nama_instansi2: req.body.f_nama_instansi,
-       catatan:req.body.f_catatan,
-       isi_surat:req.body.f_Isi_Surat,
-       proses_surat:req.body.f_ProsesSurat,
-       status:req.body.f_ProsesSurat_edit
-      // isi_surat:req.body.emailpengguna
-    };
-    
-    SuratMasuk.Suratmasuk_add(arraydata).then(hasil=>{
-      if(hasil)
-      {
-         let vars={
-            pages:'../pages/Suratmasuk',
-            pageTitle:'/Dokumen/Suratmasuk'
-        }
-        res.render('layouts/admin_layout',vars);
-      } 
-    }).catch(error=>{
-       console.log(error);
+    var hasilupload  = "";
+    var namafile = "";
+    upload(req,res,function(err){
+        if(err)
+            console.error(err);
+        
+        namafile = req.files[0].originalname; 
+
+        console.log(namafile);
+        let arraydata = {
+        nama_instansi:req.body.f_Pengirim,
+        no_surat:req.body.f_Nomor_Surat,
+        tanggal_masuk:req.body.f_tgl_masuk,
+        tanggal_surat:req.body.f_tgl_surat,
+        nama_instansi2: req.body.f_nama_instansi,
+        catatan:req.body.f_catatan,
+        isi_surat:req.body.f_Isi_Surat,
+        proses_surat:req.body.f_ProsesSurat,
+        status:req.body.f_ProsesSurat,
+        file:'sp reklame (1).pdf'
+        };
+        
+        console.log(arraydata)
+        SuratMasuk.Suratmasuk_add(arraydata).then(hasil=>{
+        if(hasil)
+        {
+            // console.log(req.file);
+            // hlp.genAlert(req, { message: constant.MY_FILEUPLOADED });
+            // res.redirect('/upload');
+            let vars={
+                pages:'../pages/Suratmasuk',
+                pageTitle:'/Dokumen/Suratmasuk'
+            }
+            res.render('layouts/admin_layout',vars);
+        } 
+        }).catch(error=>{
+        console.log(error);
+        })
     })
 };
+
+
+exports.ambildirectory = (req,res,next)=>{
+    var dir1 = `./dokument/suratmasuk/`;
+    fs.readdir(dir1,function(err,files){
+        console.log(files);
+        if(err)
+        {
+            console.log(err)
+            res.statusCode = 404;
+            res.end('directory not found');
+        }
+        else
+        {
+            const filepath = path.join(dir1,req.params.namasurat);
+            fs.createReadStream(filepath).pipe(res);    
+        }
+    })
+}
+exports.downloadfilepdf = (req,res)=>{
+    var dir1 = `./dokument/suratmasuk/`;
+    fs.readdir(dir1,function(err,files){
+        if(err)
+        {
+            console.log(err)
+            res.statusCode = 404;
+            res.end('directory not found');
+        }
+        else
+        {
+            var filepath = path.join(dir1,req.params.namasurat);
+            var file = fs.createReadStream(filepath);
+            var stat = fs.statSync(filepath);
+            console.log(stat.size);
+            res.setHeader('Content-Length', stat.size);
+            res.setHeader('Content-Type', 'text/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=${req.params.namasurat}`);
+            file.pipe(res);
+        }
+    })
+}
 
 exports.edit = (req, res, next) => {
     let arraydata = {
@@ -107,13 +185,13 @@ exports.edit = (req, res, next) => {
         isi_surat:req.body.f_Isi_Surat_edit,
         proses_surat:req.body.f_ProsesSurat_edit,
         status:req.body.f_ProsesSurat_edit,
-        pengirim_edit:req.body.f_Pengirim_edit
+        pengirim_edit:req.body.f_Pengirim_edit,
+        file:req.body.filename
      };
-
      let breadcrumbs = {
                 Home: '/admin',
                 AksesDokumen: '#'
-            }
+     }
      
     // kita pakai md5 supaya bisa dibaca apakah di user List terdeteksi sebagai default password atau belum    
     SuratMasuk.SuratMasuk_edit(arraydata)
@@ -132,3 +210,4 @@ exports.edit = (req, res, next) => {
             
         });
 };
+

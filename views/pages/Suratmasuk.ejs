@@ -40,7 +40,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="tambahasuratmasuk"  action="/Masuk-add" method="post">
+            <form id="tambahasuratmasuk"  action="/Masuk-add/?_csrf=<%= csrfToken%>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="_csrf"value="<%= csrfToken %>" >
                     <div class="form-group">
@@ -94,13 +94,23 @@
                             <option value="2">Di Arsipkan</option>                                    
                         </select>
                     </div>
+                    <!-- <div class="form-group">
+                        <div class="card-body">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <div class="form-group">
+                                <label>File</label>
+                                <input type="file" class="form-control" id="filename" name="filename">
+                            </div>
+                        </div>
+                    </div> -->
+
                     <div class="form-group">
                         <section class="pb-4">
                             <div class="bg-white border rounded-5">
                             <section class="w-100 p-4 d-flex justify-content-center pb-4">
                                 <div style="width: 22rem;">
                                 <label class="form-label" for="customFile_surat">File Surat</label>
-                                <input type="file" class="form-control" id="customFile_surat">
+                                <input type="file" class="form-control" id="customFile_surat" name="customFile_surat">
                                 </div>
                             </section>     
                             </div>
@@ -128,7 +138,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="Editsuratmasuk" action="/Edit"  method="post">
+            <form id="Editsuratmasuk" enctype="multipart/form-data" action="/Edit?_csrf=<%=csrfToken%>" method="post">
+                
                 <div class="modal-body">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                     <div class="form-group">
@@ -183,22 +194,15 @@
                             <option value="1">Di Teruskan/ Disposisi</option>               
                             <option value="2">Di Arsipkan</option>                                 
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <section class="pb-4">
-                            <div class="bg-white border rounded-5">
-                            <section class="w-100 p-4 d-flex justify-content-center pb-4">
-                                <div style="width: 22rem;">
-                                <label class="form-label" for="customFile_surat">File Surat</label>
-                                <input type="file" class="form-control" id="customFile_surat">
-                                </div>
-                            </section>     
-                            </div>
-                        </section>
-                    </div>
+                    </div>             
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" class="form-control" id="filename" name="filename">
+                        </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <!-- <button type="submit" class="btn w-25 float-right btn-primary">Upload</button> -->
                     <input type="submit" id="simpan_edit" class="btn btn-primary"></button>
                 </div>
             </form>
@@ -316,15 +320,15 @@
                 {
                     "data":null,"autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-                            '<a class="fa fa-file" style="padding-right:1rem"/>'+
-                            '<a class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+                            '<a class="fa fa-file" style="padding-right:1rem" onclick="bukafile(\''+data.file+'\');return false"/>'+
+                            '<a class="fa fa-file-arrow-down" style="padding-right:1rem" onclick="downloadfile(\''+data.file+'\');return false" />'+
                             '</div>'
                     }
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-                            '<a onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+                            '<a onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\', \'' + data.file + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
                             '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
                             '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
                             '</div>'
@@ -336,22 +340,30 @@
 
 
         
-        $('#savetambahsurat').on('click',function(){
-            var formakses = $('#tambahasuratmasuk');
-            var url = formakses.attr('action');
-            $(this).html('please wait ... ');
-            formakses.submit();
+    $('#savetambahsurat').on('click',function(){
+        var formakses = $('#tambahasuratmasuk');
+        var url = formakses.attr('action');
+        $(this).html('please wait ... ');
+        formakses.submit();
     })
 
     $('#simpan_edit').on('click',function(){
         var surat_id = $('#f_surat_id_edit').val();
         var formakses1 = $('#Editsuratmasuk');
-        var url = formakses1.attr('action','/Edit/'+surat_id);
+        var url = formakses1.attr('action','/Edit/'+surat_id +'?_csrf=<%=csrfToken%>');
         $(this).html('please wait ... ');
         formakses1.submit();
         })
 
     })
+
+    function downloadpfd()
+    {
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = '1659616191311-FORM CUTI.pdf';
+        link.dispatchEvent(new MouseEvent('click'));
+    }
 
     function shwo_edit(surat_id, nama_instansi, nama_instansi2,no_surat, tanggal_surat,tanggal_masuk, catatan, isi_surat, proses )
     {
@@ -365,6 +377,17 @@
         $("#f_Isi_Surat_edit").val(isi_surat);
         $("#f_surat_id_edit").val(surat_id);
         document.getElementById("f_ProsesSurat_edit").value = proses;   
+    }
+
+    function bukafile(testfile)
+    {
+        
+        window.open("/pdf/"+testfile,"_BLANK","location=yes,height=570,width=520,scrollbars=yes,status=yes");        
+    }
+
+    function downloadfile(filename)
+    {
+        window.open("/downloadpdf/"+filename,"_BLANK");
     }
 
 

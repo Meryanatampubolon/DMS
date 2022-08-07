@@ -18,10 +18,6 @@ const SuratMasuk = sequelize.define('suratmasuk',{
         type:DataTypes.STRING,
         allowNull:true
     },
-    asal_surat:{
-        type:DataTypes.STRING,
-        allowNull:true
-    },
     tanggal_surat:{
         type:DataTypes.STRING,
         allowNull:true
@@ -82,6 +78,7 @@ async function Suratmasuk_add(vars){
     ('catatan' in vars) ? datainsert.catatan = vars.catatan : null;
     ('isi_surat' in vars) ? datainsert.isi_surat = vars.isi_surat:null;
     ('proses_surat' in vars) ? datainsert.proses_surat = vars.proses_surat:null;
+    ('file' in vars) ? datainsert.file = vars.file:null;
     console.log(datainsert);
     if(hlp.ObjNotEmpty(datainsert))
         return await SuratMasuk.create(datainsert);
@@ -130,6 +127,8 @@ async function suratmasuk_delete(vars) {
         return await SuratMasuk.destroy({ where: data });
     }
 }
+
+
 
 module.exports={Suratmasuk_add,SuratMasuk, surat_get, suratmasuk_delete, SuratMasuk_edit};
 
