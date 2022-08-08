@@ -4,7 +4,7 @@ const hlp = require('../helpers/helpers');
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 const constant = require('../../config/constant');
-
+const Session = require('../models/Session');
 
 
 const SuratMasuk = sequelize.define('suratmasuk',{
@@ -57,7 +57,12 @@ const SuratMasuk = sequelize.define('suratmasuk',{
     proses_surat:{
         type:DataTypes.STRING,
         allowNull:true
+    },
+    Disposisi:{
+        type:DataTypes.STRING,
+        allowNull:true
     }
+    
 },{
     indexes: [
         {
@@ -79,6 +84,7 @@ async function Suratmasuk_add(vars){
     ('isi_surat' in vars) ? datainsert.isi_surat = vars.isi_surat:null;
     ('proses_surat' in vars) ? datainsert.proses_surat = vars.proses_surat:null;
     ('file' in vars) ? datainsert.file = vars.file:null;
+    ('Disposisi' in vars) ? datainsert.Disposisi = vars.Disposisi:null;
     console.log(datainsert);
     if(hlp.ObjNotEmpty(datainsert))
         return await SuratMasuk.create(datainsert);
@@ -102,6 +108,17 @@ async function SuratMasuk_edit(vars) {
     }
 }
 
+async function SuratMasuk_edit_detail(vars) {
+    let data = {};
+    let vwhere = {};
+    ('surat_id' in vars) ? vwhere.surat_id = vars.surat_id : null;
+    ('status' in vars) ? data.status = vars.status : null;
+    console.log(vwhere);
+    if (hlp.ObjNotEmpty(vwhere)) {
+        return await SuratMasuk.update(data, { where: vwhere });
+    }
+}
+
 
 async function surat_get(vars){
     let data = {
@@ -116,7 +133,8 @@ async function surat_get(vars){
     // ('userId' in vars) ? data.where.userId = vars.userId : null;
     // ('email' in vars) ? data.where.email = vars.moduleId : null;
     let result = await SuratMasuk.findAll(data);
-    console.log(result);
+    // console.log(result);
+    // console.log(Session.userId);
     return result;
 }
 
@@ -128,9 +146,7 @@ async function suratmasuk_delete(vars) {
     }
 }
 
-
-
-module.exports={Suratmasuk_add,SuratMasuk, surat_get, suratmasuk_delete, SuratMasuk_edit};
+module.exports={Suratmasuk_add,SuratMasuk, surat_get, suratmasuk_delete, SuratMasuk_edit, SuratMasuk_edit_detail};
 
 
 

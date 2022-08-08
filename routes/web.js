@@ -136,4 +136,9 @@ router.get('/upload', isAuth(), UploadSample.index);
 router.get('/pdf/:namasurat',isAuth(),SuratMasukController.ambildirectory)
 
 router.get('/downloadpdf/:namasurat',isAuth(),SuratMasukController.downloadfilepdf)
+
+
+router.post('/getsesion', isAuth(), SuratMasukController.getsesion);
+
+router.post('/setujui_disposisi/:surat_id', isAuth(), SuratMasukController.edit_detail);
 module.exports = router;    

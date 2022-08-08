@@ -14,6 +14,9 @@ const path = require('path');
 const express = require('express');
 const querystring = require('querystring');
 const { response } = require('express');
+//const Session = require('../models/Session');
+const session = require('express-session');
+const app = express();
 
 const storage = Multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -86,9 +89,16 @@ exports.datatableSuratMasuk=(req,res,next)=>{
        opt_select:['surat_id','no_surat','isi_surat','tanggal_surat','tanggal_masuk','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat', 'file']
     }
      SuratMasuk.surat_get(select).then(result=>{
+
          return res.json(result)
      })
  }
+
+exports.getsesion = (req, res, next) =>{
+    // console.log(req.session['user']);
+    // console.log(req.session);
+    return res.json(req.session)
+}
 
 exports.insertsuratmasuk = (req,res,next)=>{
     var hasilupload  = "";
@@ -101,17 +111,20 @@ exports.insertsuratmasuk = (req,res,next)=>{
 
         console.log(namafile);
         let arraydata = {
-        nama_instansi:req.body.f_Pengirim,
-        no_surat:req.body.f_Nomor_Surat,
-        tanggal_masuk:req.body.f_tgl_masuk,
-        tanggal_surat:req.body.f_tgl_surat,
-        nama_instansi2: req.body.f_nama_instansi,
-        catatan:req.body.f_catatan,
-        isi_surat:req.body.f_Isi_Surat,
-        proses_surat:req.body.f_ProsesSurat,
-        status:req.body.f_ProsesSurat,
-        file:'sp reklame (1).pdf'
+            nama_instansi:req.body.f_Pengirim,
+            no_surat:req.body.f_Nomor_Surat,
+            tanggal_masuk:req.body.f_tgl_masuk,
+            tanggal_surat:req.body.f_tgl_surat,
+            nama_instansi2: req.body.f_nama_instansi,
+            catatan:req.body.f_catatan,
+            isi_surat:req.body.f_Isi_Surat,
+            proses_surat:req.body.f_ProsesSurat,
+            status:req.body.f_ProsesSurat,
+            Disposisi:req.body.f_ProsesDisposisi,
+            file:namafile
         };
+        
+      
         
         console.log(arraydata)
         SuratMasuk.Suratmasuk_add(arraydata).then(hasil=>{
@@ -150,6 +163,8 @@ exports.ambildirectory = (req,res,next)=>{
         }
     })
 }
+
+
 exports.downloadfilepdf = (req,res)=>{
     var dir1 = `./dokument/suratmasuk/`;
     fs.readdir(dir1,function(err,files){
@@ -211,3 +226,31 @@ exports.edit = (req, res, next) => {
         });
 };
 
+
+
+exports.edit_detail = (req, res, next) => {
+    let arraydata = {
+        surat_id:req.params.surat_id,
+        status:"Disetujui",
+     };
+
+     let breadcrumbs = {
+                Home: '/admin',
+                AksesDokumen: '#'
+     }
+    SuratMasuk.SuratMasuk_edit_detail(arraydata)
+        .then(r => {
+            hlp.genAlert(req, { tipe: 'error', message: constant.MY_USERPASSWORDCHANGED });
+        SuratMasuk.SuratMasuk.findOne({raw:true,where:{surat_id:req.params.surat_id}}).then(result=>{
+            let vars = {
+                q_departemen: result,
+                breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
+                menu_pengaturan: true,
+                pages: '../pages/SuratMasuk',
+                pageTitle: 'Surat Masuk'
+            };
+            return res.render('layouts/admin_layout',vars);
+        })
+            
+    });
+};
