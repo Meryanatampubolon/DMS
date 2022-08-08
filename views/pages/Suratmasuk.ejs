@@ -5,12 +5,9 @@
             <div class="card-header">
                 <p style="font-size: 1.2rem; color: black; font-weight: bold;">Rekap Surat Masuk</p>
             </div>
-<<<<<<< Updated upstream
-=======
             <div class="card-header">
                 <a  data-toggle="modal" data-target="#modal-adduser" id="btn_add" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
                 </div>
->>>>>>> Stashed changes
             <div class="card-body">
                 <div class="mt-2">
                     <table id="tabelsuratmasuk" class="table" style="width: 100%;">
@@ -34,9 +31,6 @@
     </div>
 </div>
 
-<<<<<<< Updated upstream
-<script>
-=======
 <div class="modal fade" id="modal-adduser">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -227,7 +221,6 @@
             }
     });
     var status_staff;
->>>>>>> Stashed changes
 
     $(document).ready(function(){
         validasi_data();        
@@ -298,9 +291,7 @@
                 },
                 {
                     "data":"status","autoWidth":true,"render":function(data){
-<<<<<<< Updated upstream
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
-=======
 
                         if(data != null)
                         {
@@ -309,7 +300,6 @@
                         else{
                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
                         }
->>>>>>> Stashed changes
                     }
                 },
                 {
@@ -323,14 +313,11 @@
                         {
                             
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-<<<<<<< Updated upstream
                             '<a class="fa fa-edit" style="padding-right:1rem"/>'+
                             '<a class="fa fa-trash" style="padding-right:1rem"/>'+
-=======
                             '<a id="btn_edit" onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\', \'' + data.file + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
                             '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
                             '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
->>>>>>> Stashed changes
                             '</div>'
                         }
                         else{
@@ -344,9 +331,6 @@
                 
             ]
         })
-<<<<<<< Updated upstream
-    })
-=======
     }
     
 
