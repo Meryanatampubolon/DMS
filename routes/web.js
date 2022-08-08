@@ -66,4 +66,13 @@ router.get('/modules-delete/:userId/:moduleId', isAuth, checkPermission('pm_admi
 
 
 
+<<<<<<< Updated upstream
 module.exports = router;
+=======
+router.get('/downloadpdf/:namasurat',isAuth(),SuratMasukController.downloadfilepdf)
+
+router.post('/getsesion', isAuth(), SuratMasukController.getsesion);
+
+router.post('/setujui_disposisi/:surat_id', isAuth(), SuratMasukController.edit_detail);
+module.exports = router;    
+>>>>>>> Stashed changes

@@ -1,0 +1,229 @@
+
+<div class="wrapper wrapper-content animated fadeInRight gray-bg" style="overflow: hidden; padding-bottom: 170px;">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="col-sm-12 col-md-12">
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h5 class="float-left"> Halaman Detail Surat Keluar</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/setujui_disposisi" id="detail_suratmasuk" method="post">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4">
+                                    <div class="card">
+                                        <div class="card-body" style="text-align: center;">
+                                            
+                                            <input style="display: none;" type="text" class="form-control" disabled id="f_surat_id" name="f_surat_id" value="<%= data_surat? data_surat.surat_id: (oldInput ? oldInput.surat_id: '') %> " placeholder="Pengirim / Asal Sura" >
+                                            <input style="display: none;" type="text" class="form-control" disabled id="f_file" name="f_file" value="<%= data_surat? data_surat.file: (oldInput ? oldInput.file: '') %> " placeholder="Pengirim / Asal Sura" >
+                                            <div class="form-group">                      
+                                                <input type="button" value="Tampilakn" onclick="bukafile()" class="btn w-60 float-center btn-primary" style="background-color: white; color: blue;"><i></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="button" value="Download" onclick="downloadfile()" class="btn w-60 float-center btn-primary" style="background-color: white; color: yellowgreen;">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="button" value="Kembali" class="btn w-60 float-center btn-primary" style="background-color: white; color: yellowgreen;">
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-sm-8 col-md-8">
+                                    <div class="card">
+                                        <div class="card-body" style="text-align: left;">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="button" id="id_setujui" value="Terima & Setujui" class="btn w-20 float-center btn-primary">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Pengirim / Asal Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_Pengirim" name="f_Pengirim" value="<%= data_surat? data_surat.nama_instansi: (oldInput ? oldInput.nama_instansi: '') %> " placeholder="Pengirim / Asal Sura" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Nomor Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_Nomor_Surat" name="f_Nomor_Surat" placeholder="Nomor Surat" value="<%= data_surat? data_surat.no_surat: (oldInput ? oldInput.no_surat: '') %> ">
+                                                </div>                    
+                                                <div class="form-group">
+                                                    <label>Tanggal Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_tgl_surat" name="f_tgl_surat" placeholder="Tanggal Surat" value="<%= data_surat? data_surat.tanggal_surat: (oldInput ? oldInput.tanggal_surat: '') %> ">
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label>Tanggal Diterima</label>
+                                                    <input type="text" class="form-control" disabled id="f_tgl_diterima" name="f_tgl_diterima" placeholder="Tanggal Diterima" value="<%= data_surat? data_surat.tanggal_masuk: (oldInput ? oldInput.tanggal_masuk: '') %> ">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Isi Surat</label>
+                                                    <textarea  class="form-control" disabled id="f_Isi_Surat" name="f_Isi_Surat" placeholder="Isi Surat" value="<%= data_surat? data_surat.isi_surat: (oldInput ? oldInput.isi_surat: '') %> "></textarea>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label>Status Surat</label>
+                                                    <input type="text" class="form-control" disabled id="f_Status" name="f_Status" placeholder="Status" value="<%= data_surat? data_surat.status: (oldInput ? oldInput.status: '') %> ">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Catatan</label>
+                                                    <input type="text" class="form-control" disabled id="f_Catatan" name="f_Catatan" placeholder="Catatan" value="<%= data_surat? data_surat.catatan: (oldInput ? oldInput.catatan: '') %> ">
+                                                </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </form>  
+                    </div> 
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var token = '<%= csrfToken %>'
+    var datasimpan = "";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+            }
+    });
+
+    $(document).ready(function(){
+    })
+    // var suratmasuk = $('#tabelDisposisi').dataTable({
+    //             "processing":true,
+    //             "paging":true,
+    //             "bInfo":true,
+    //             "serverside":true,
+    //             // "ajax":{
+                    
+    //             //     "url":'/datatableakSuratMasuk',
+    //             //     "type":"POST",
+    //             //     "dataSrc":"",
+    //             // },
+    //             "columns":[
+    //                 {
+    //                     "data":"surat_id","autoWidth":true,"render":function(data){
+    //                         if(data != null)
+    //                         {
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+    //                         }
+    //                         else{
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+    //                         }
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":"no_surat","autoWidth":true,"render":function(data){
+    //                         if(data != null)
+    //                         {
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+    //                         }
+    //                         else{
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+    //                         }
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":"nama_instansi","autoWidth":true,"render":function(data){
+    //                         if(data != null)
+    //                         {
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+    //                         }
+    //                         else{
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+    //                         }
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":"isi_surat","autoWidth":true,"render":function(data){
+    //                         if(data != null)
+    //                         {
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+    //                         }
+    //                         else{
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+    //                         }
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":"tanggal_surat","autoWidth":true,"render":function(data){
+    //                         if(data != null)
+    //                         {
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+    //                         }
+    //                         else{
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+    //                         }
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":"tanggal_masuk","autoWidth":true,"render":function(data){
+    //                         if(data != null)
+    //                         {
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+    //                         }
+    //                         else{
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+    //                         }
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":"status","autoWidth":true,"render":function(data){
+    //                         if(data != null)
+    //                         {
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+    //                         }
+    //                         else{
+    //                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+    //                         }
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":null,"autoWidth":true,"render":function(data){
+    //                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+    //                             '<a class="fa fa-file" style="padding-right:1rem"/>'+
+    //                             '<a class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+    //                             '</div>'
+    //                     }
+    //                 },
+    //                 {
+    //                     "data":null,"autoWidth":true,"render":function(data){
+    //                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+    //                             '<a onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+    //                             '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+    //                             '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
+    //                             '</div>'
+    //                     }
+    //                 }
+                    
+    //             ]
+    //         })
+    //     })
+
+
+    function bukafile()
+    {
+        window.open("/pdf/"+ $("#f_file").val(),"_BLANK","location=yes,height=570,width=520,scrollbars=yes,status=yes");        
+    }
+
+    function downloadfile()
+    {
+        window.open("/downloadpdf/"+$("#f_file").val(),"_BLANK");
+    }
+
+    // function setujui_disposisi()
+    // {
+    //     window.open("/setujui_disposisi/"+$("#f_surat_id").val(),"_BLANK");
+    // }
+
+    $('#id_setujui').on('click',function(){
+        alert("Oke");
+        var surat_id = $('#f_surat_id').val();
+        var formakses1 = $('#detail_suratmasuk');
+        var url = formakses1.attr('action','/setujui_disposisi/'+ surat_id);
+        $(this).html('please wait ... ');
+        formakses1.submit();
+    });
+    
+</script>

@@ -212,4 +212,76 @@ exports.passwordReset = (req, res, next) => {
         hlp.genAlert(req,{tipe: 'error',message:constant.MY_USERPASSWORDCHANGED});
         return res.redirect('back');
     });
+<<<<<<< Updated upstream
  };
+=======
+}
+
+
+
+exports.list_nonadmin = (req, res, next) => {
+    const q1 = User.user_get({ opt_where: { moduleName: ['Staff', 'Pimpinan'] } });
+    const q2 = Departemen.vDepartemen.findAll({ raw: true, where: { departemenParentId: null } });
+   
+    const q3 = Modules.findAll({ raw: true, where: { moduleName: ['Staff', 'Pimpinan', 'Komisi 1'] } });
+    Promise.all([q1, q2, q3]).then(result => {
+
+        console.log(result[2]);
+        let breadcrumbs = {
+            Home: '/admin',
+            Pengguna: '#'
+        }
+
+        let vars = {
+            q_user: result[0],
+            q_departemen: result[1],
+            q_module: result[2],
+            superadmin: false,
+            defpassword: hlp.md5(constant.MY_DEFAULTPASSWORD),
+            breadcrumbs: hlp.genBreadcrumbs(breadcrumbs),
+            menu_pengaturan: true,
+            pages: '../admin/user_list',
+            pageTitle: 'Pengguna',
+        };
+        res.render('layouts/admin_layout', vars);
+
+    });
+}
+
+exports.add_nonadmin = (req, res, next) => {
+    const validationErrors = [];
+    if (!validator.isEmail(req.body.email)) validationErrors.push('Please enter a valid email address.');
+    if (validationErrors.length) {
+        hlp.genAlert(req, { message: validationErrors });
+        return res.redirect('/pengguna');
+    }
+    User.vUser.findOne({ where: { email: req.body.email } }).then(result => {
+        if (result) {
+            req.flash('oldInput', { fullname: req.body.fullname, email: req.body.email });
+            hlp.genAlert(req, { tipe: 'error', message: constant.MY_USEREMAILISNOTUNIQUE });
+            return res.redirect('/pengguna');
+        } else {
+            User.tUser.create({ fullname: req.body.fullname, email: req.body.email, password: hlp.md5(constant.MY_DEFAULTPASSWORD) }).then(r1 => {
+                const q1 = UserModule.tUserModule.findOrCreate({ where: { userId: r1.userId, moduleId: req.body.moduleId } });
+                const q2 = UserDepartemen.tUserDepartemen.findOrCreate({ where: { userId: r1.userId, departemenId: req.body.departemenId } });
+                Promise.all([q1, q2]).then(result => {
+                    hlp.genAlert(req, { message: constant.MY_USERCREATED });
+                    return res.redirect('/pengguna');
+                });
+            });
+        }
+    });
+}
+
+
+exports.delete_nonadmin = (req, res, next) => {
+    const q1 = User.tUser.destroy({ where: { userId: req.body.userId } });
+    const q2 = UserModule.tUserModule.destroy({ where: { userId: req.body.userId } });
+    const q3 = UserDepartemen.tUserDepartemen.destroy({ where: { userId: req.body.userId } });
+    Promise.all([q1, q2, q3]).then(result => {
+        hlp.genAlert(req, { tipe: 'error', message: constant.MY_DATADELETE });
+        return res.redirect('/pengguna');
+    });
+
+};
+>>>>>>> Stashed changes
