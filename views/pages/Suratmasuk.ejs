@@ -5,6 +5,12 @@
             <div class="card-header">
                 <p style="font-size: 1.2rem; color: black; font-weight: bold;">Rekap Surat Masuk</p>
             </div>
+<<<<<<< Updated upstream
+=======
+            <div class="card-header">
+                <a  data-toggle="modal" data-target="#modal-adduser" id="btn_add" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
+                </div>
+>>>>>>> Stashed changes
             <div class="card-body">
                 <div class="mt-2">
                     <table id="tabelsuratmasuk" class="table" style="width: 100%;">
@@ -28,9 +34,226 @@
     </div>
 </div>
 
+<<<<<<< Updated upstream
 <script>
+=======
+<div class="modal fade" id="modal-adduser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title" class="modal-title">Form Surat Masuk</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="tambahasuratmasuk"  action="/Masuk-add/?_csrf=<%= csrfToken%>" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="_csrf"value="<%= csrfToken %>" >
+                    <div class="form-group">
+                        <label>Nama Instansi</label>
+                        <input type="text" class="form-control" id="f_Pengirim" name="f_Pengirim" placeholder="Pengirim / Asal Sura" >
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Surat</label>
+                        <input type="text" class="form-control" id="f_Nomor_Surat" name="f_Nomor_Surat" placeholder="Nomor Surat" >
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_masuk" name="f_tgl_masuk" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_surat" name="f_tgl_surat" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>                
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>Nama Instansi</label>
+                        <textarea type="text" class="form-control" id="f_nama_instansi" name="f_nama_instansi" placeholder="Nama Instansi" ></textarea>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label>Catatan</label>
+                        <input type="text" class="form-control" id="f_catatan" name="f_catatan" placeholder="Catatan" >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Isi Surat</label>
+                        <textarea  class="form-control" id="f_Isi_Surat" name="f_Isi_Surat" placeholder="Isi Surat" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Proses Surat</label>
+                        <select id="f_ProsesSurat"  name="f_ProsesSurat" class="form-control">
+                            <option value="1">Di Teruskan/ Disposisi</option>               
+                            <option value="2">Di Arsipkan</option>                                    
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Disposisi</label>
+                        <select id="f_ProsesDisposisi"  name="f_ProsesDisposisi" class="form-control">
+                            <option value="Komisi 1">Komisi I</option>  
+                            <option value="Komisi 2">Komisi II</option>   
+                            <option value="Komisi 3">Komisi III</option>  
+                            <option value="Komisi 4">Komisi IV</option>  
+                            <option value="Ketua Banmus">Ketua Banmus</option>  
+                            <option value="Ketua Bapemperda">Ketua Bapemperda</option>  
+                            <option value="Ketua Badan Kehormatan">Ketua Badan Kehormatan</option>                                      
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <section class="pb-4">
+                            <div class="bg-white border rounded-5">
+                            <section class="w-100 p-4 d-flex justify-content-center pb-4">
+                                <div style="width: 22rem;">
+                                <label class="form-label" for="customFile_surat">File Surat</label>
+                                <input type="file" class="form-control" id="customFile_surat" name="customFile_surat">
+                                </div>
+                            </section>     
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="button" id="savetambahsurat" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal" id="modal_edituser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title" class="modal-title">Form Surat Masuk</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="Editsuratmasuk" enctype="multipart/form-data" action="/Edit?_csrf=<%=csrfToken%>" method="post">
+                
+                <div class="modal-body">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="f_surat_id_edit" style="display:none;" name="f_surat_id_edit" placeholder="Surat ID" >
+                        <label>Nama Instansi</label>
+                        <input type="text" class="form-control" id="f_Pengirim_edit" name="f_Pengirim_edit" placeholder="Pengirim / Asal Sura" >
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Surat</label>
+                        <input type="text" class="form-control" id="f_Nomor_Surat_edit" name="f_Nomor_Surat_edit" placeholder="Nomor Surat" >
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_masuk_edit" name="f_tgl_masuk_edit" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <div class="input-group date" >
+                            <input type="text" class="form-control" id="f_tgl_surat_edit" name="f_tgl_surat_edit" required="">
+                            <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>                
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Instansi</label>
+                        <textarea type="text" class="form-control" id="f_nama_instansi_edit" name="f_nama_instansi_edit" placeholder="Nama Instansi" ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Catatan</label>
+                        <input type="text" class="form-control" id="f_catatan_edit" name="f_catatan_edit" placeholder="Catatan" >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Isi Surat</label>
+                        <textarea  class="form-control" id="f_Isi_Surat_edit" name="f_Isi_Surat_edit" placeholder="Isi Surat" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Proses Surat</label>
+                        
+                        <select id="f_ProsesSurat_edit"  name="f_ProsesSurat_edit" class="form-control">
+                            <option value="1">Di Teruskan/ Disposisi</option>               
+                            <option value="2">Di Arsipkan</option>                                 
+                        </select>
+                    </div>             
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" class="form-control" id="filename" name="filename">
+                        </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <!-- <button type="submit" class="btn w-25 float-right btn-primary">Upload</button> -->
+                    <input type="submit" id="simpan_edit" class="btn btn-primary"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var token = '<%= csrfToken %>'
+    var datasimpan = "";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+            }
+    });
+    var status_staff;
+>>>>>>> Stashed changes
 
     $(document).ready(function(){
+        validasi_data();        
+    
+        
+    $('#savetambahsurat').on('click',function(){
+        var formakses = $('#tambahasuratmasuk');
+        var url = formakses.attr('action');
+        $(this).html('please wait ... ');
+        formakses.submit();
+    })
+
+    $('#simpan_edit').on('click',function(){
+        var surat_id = $('#f_surat_id_edit').val();
+        var formakses1 = $('#Editsuratmasuk');
+        var url = formakses1.attr('action','/Edit/'+surat_id +'?_csrf=<%=csrfToken%>');
+        $(this).html('please wait ... ');
+        formakses1.submit();
+        })
+
+
+    })
+
+
+
+    function get_datatable(){
         var suratmasuk = $('#tabelsuratmasuk').dataTable({
             "processing":true,
             "paging":true,
@@ -75,7 +298,18 @@
                 },
                 {
                     "data":"status","autoWidth":true,"render":function(data){
+<<<<<<< Updated upstream
                         return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+=======
+
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
+>>>>>>> Stashed changes
                     }
                 },
                 {
@@ -85,14 +319,89 @@
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
+                        if(status_staff != true)
+                        {
+                            
                         return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+<<<<<<< Updated upstream
                             '<a class="fa fa-edit" style="padding-right:1rem"/>'+
                             '<a class="fa fa-trash" style="padding-right:1rem"/>'+
+=======
+                            '<a id="btn_edit" onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\', \'' + data.file + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+                            '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                            '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
+>>>>>>> Stashed changes
                             '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                            '</div>'
+
+                        }
                     }
                 }
                 
             ]
         })
+<<<<<<< Updated upstream
     })
+=======
+    }
+    
+
+    function downloadpfd()
+    {
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = '1659616191311-FORM CUTI.pdf';
+        link.dispatchEvent(new MouseEvent('click'));
+    }
+
+    function shwo_edit(surat_id, nama_instansi, nama_instansi2,no_surat, tanggal_surat,tanggal_masuk, catatan, isi_surat, proses )
+    {
+        $("#modal_edituser").modal('show');
+        $("#f_Pengirim_edit").val(nama_instansi );
+        $("#f_Nomor_Surat_edit").val(no_surat);
+        $("#f_tgl_masuk_edit").val(tanggal_masuk);
+        $("#f_tgl_surat_edit").val(tanggal_surat);
+        $("#f_nama_instansi_edit").val(nama_instansi2);
+        $("#f_catatan_edit").val(catatan);
+        $("#f_Isi_Surat_edit").val(isi_surat);
+        $("#f_surat_id_edit").val(surat_id);
+        document.getElementById("f_ProsesSurat_edit").value = proses;   
+    }
+
+    function bukafile(testfile)
+    {
+        
+        window.open("/pdf/"+testfile,"_BLANK","location=yes,height=570,width=520,scrollbars=yes,status=yes");        
+    }
+
+    function downloadfile(filename)
+    {
+        window.open("/downloadpdf/"+filename,"_BLANK");
+    }
+
+
+    function validasi_data()
+    {
+        $.ajax({
+            type: 'POST',
+            url: "/getsesion",
+            success: function (data) {
+                status_staff = data['pm_staff'] ;
+                if(data['pm_staff'] == true);
+                {
+                    document.getElementById("btn_add").style.display = "none";
+                    
+                }
+                get_datatable();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                toastr.warning('@Resources.Lang.notValid');
+            }
+        })
+    }
+>>>>>>> Stashed changes
 </script>
