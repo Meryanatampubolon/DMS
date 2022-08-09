@@ -137,6 +137,8 @@ router.get('/pdf/:namasurat',isAuth(),SuratMasukController.ambildirectory)
 
 router.get('/downloadpdf/:namasurat',isAuth(),SuratMasukController.downloadfilepdf)
 
+router.get('/download_pdf/:namasurat',isAuth(),SuratMasukController.downloadfilepdf)
+
 
 router.post('/getsesion', isAuth(), SuratMasukController.getsesion);
 

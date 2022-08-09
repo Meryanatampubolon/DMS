@@ -5,11 +5,9 @@
             <div class="card-header">
                 <p style="font-size: 1.2rem; color: black; font-weight: bold;">Rekap Surat Masuk</p>
             </div>
-
             <div class="card-header">
                 <a  data-toggle="modal" data-target="#modal-adduser" id="btn_add" class="btn btn-primary float-right"><i class="fa fa-plus"></i></a>             
                 </div>
-
             <div class="card-body">
                 <div class="mt-2">
                     <table id="tabelsuratmasuk" class="table" style="width: 100%;">
@@ -32,7 +30,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="modal-adduser">
     <div class="modal-dialog modal-lg">
@@ -242,10 +239,8 @@
         var url = formakses1.attr('action','/Edit/'+surat_id +'?_csrf=<%=csrfToken%>');
         $(this).html('please wait ... ');
         formakses1.submit();
-        })
-
-
     })
+});
 
 
 
@@ -263,40 +258,62 @@
             },
             "columns":[
                 {
-                    "data":"no","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"surat_id","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"nomorsurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"no_surat","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"asalsurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"nama_instansi","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"isisurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"isi_surat","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"tglsurat","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                    "data":"tanggal_surat","autoWidth":true,"render":function(data){
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
-                    "data":"tglterima","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
-                    }
-                },
-                {
-                    "data":"status","autoWidth":true,"render":function(data){
-
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
-
+                    "data":"tanggal_masuk","autoWidth":true,"render":function(data){
 
                         if(data != null)
                         {
@@ -305,12 +322,27 @@
                         else{
                             return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
                         }
+                    }
+                },
+                {
+                    "data":"status","autoWidth":true,"render":function(data){
+                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
 
+                        if(data != null)
+                        {
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        }
+                        else{
+                            return '<div style="text-align: left; font-size: 12px; width: 100%;"></div>'
+                        }
                     }
                 },
                 {
                     "data":null,"autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
+                        return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a onclick="bukafile(\'' + data.file + '\')" class="fa fa-file" style="padding-right:1rem"/>'+
+                            '<a onclick="downloadfile(\'' + data.file + '\')" class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+                            '</div>'
                     }
                 },
                 {
@@ -318,30 +350,25 @@
                         if(status_staff != true)
                         {
                             
-                        return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
-
-                            '<a class="fa fa-edit" style="padding-right:1rem"/>'+
-                            '<a class="fa fa-trash" style="padding-right:1rem"/>'+
-
-                            '<a id="btn_edit" onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\', \'' + data.file + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
-                            '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
-                            '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
-
-                            '</div>'
+                            return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                                '<a id="btn_edit" onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\', \'' + data.file + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+                                '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                                '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
+                                '<a onclick="downloadfile(\'' + data.file + '\')" class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
+                                '</div>'
                         }
                         else{
                             return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
                             '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                            '<a onclick="downloadfile(\'' + data.file + '\')" class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
                             '</div>'
-
                         }
                     }
                 }
                 
             ]
         })
-
-    }
+    };
     
 
     function downloadpfd()
@@ -369,7 +396,7 @@
     function bukafile(testfile)
     {
         
-        window.open("/pdf/"+testfile,"_BLANK","location=yes,height=570,width=520,scrollbars=yes,status=yes");        
+        window.open("/pdf/"+ testfile ,"_BLANK","location=yes,height=570,width=520,scrollbars=yes,status=yes");        
     }
 
     function downloadfile(filename)
@@ -378,17 +405,24 @@
     }
 
 
+    function download_pdf()
+    {
+        window.open("/downloadpdf/"+filename,"_BLANK");
+    }
+
     function validasi_data()
     {
         $.ajax({
             type: 'POST',
             url: "/getsesion",
             success: function (data) {
-                status_staff = data['pm_staff'] ;
+                //status_staff = data['pm_staff'] ;
                 if(data['pm_staff'] == true);
                 {
-                    document.getElementById("btn_add").style.display = "none";
-                    
+                   if(data['pm_pimpinan'] == false){
+                        document.getElementById("btn_add").style.display = "none";
+                        status_staff = true;
+                   }
                 }
                 get_datatable();
             },

@@ -15,8 +15,13 @@ const express = require('express');
 const querystring = require('querystring');
 const { response } = require('express');
 //const Session = require('../models/Session');
-const session = require('express-session');
-const app = express();
+// const session = require('express-session');
+// const app = express();
+
+
+const pdf = require('pdf-creator-node');
+const options = require('../../models/options');
+const data = require('../../models/data');
 
 const storage = Multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -34,6 +39,33 @@ const storage = Multer.diskStorage({
     }
 })
 const upload = Multer({storage:storage}).array("customFile_surat",12);
+
+
+// const generatePdf = async (req, res, next) =>{
+//     const html = fs.readFileSync(path.join(__dirname, '../view/admin/Template.html'), 'utf-8');
+//     const filename = Math.random() +'_doc'+ '.pdf'
+
+//     const u = SuratMasuk.SuratMasuk.findOne({ where: { surat_id: req.params.surat_id } });
+//     Promise.all([u])
+//     .then(result => {
+//         if (result[0]) {
+//             const dokumen ={
+//                 html:html,
+//                 data: {
+//                     produck : result[0]
+//                 },
+//                 path: 
+//             }
+
+//             pdf.create()
+//         } else {
+//             hlp.genAlert(req, { tipe: 'error', message: constant.MY_USERDOESNOTEXISTS });
+//             return res.redirect('/users');
+//         }
+//     });
+
+  
+// }
 
 
 
@@ -84,7 +116,6 @@ exports.delete = (req, res, next) => {
 };
 
 exports.datatableSuratMasuk=(req,res,next)=>{
-    
     let select = {
        opt_select:['surat_id','no_surat','isi_surat','tanggal_surat','tanggal_masuk','status', 'catatan', 'nama_instansi', 'nama_instansi2', 'proses_surat', 'file']
     }
@@ -96,7 +127,7 @@ exports.datatableSuratMasuk=(req,res,next)=>{
 
 exports.getsesion = (req, res, next) =>{
     // console.log(req.session['user']);
-    // console.log(req.session);
+    console.log(req.session);
     return res.json(req.session)
 }
 
@@ -108,8 +139,6 @@ exports.insertsuratmasuk = (req,res,next)=>{
             console.error(err);
         
         namafile = req.files[0].originalname; 
-
-        console.log(namafile);
         let arraydata = {
             nama_instansi:req.body.f_Pengirim,
             no_surat:req.body.f_Nomor_Surat,
@@ -163,7 +192,6 @@ exports.ambildirectory = (req,res,next)=>{
         }
     })
 }
-
 
 exports.downloadfilepdf = (req,res)=>{
     var dir1 = `./dokument/suratmasuk/`;
