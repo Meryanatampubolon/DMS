@@ -326,8 +326,6 @@
                 },
                 {
                     "data":"status","autoWidth":true,"render":function(data){
-                        return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
-
                         if(data != null)
                         {
                             return '<div style="text-align: left; font-size: 12px; width: 100%;">' + data + '</div>'
@@ -349,19 +347,35 @@
                     "data":null,"autoWidth":true,"render":function(data){
                         if(status_staff != true)
                         {
-                            
+                            if(data.status == "Disetujui")
+                            {
                             return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
                                 '<a id="btn_edit" onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\', \'' + data.file + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
                                 '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
                                 '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
                                 '<a onclick="downloadfile(\'' + data.file + '\')" class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
                                 '</div>'
+                            }else{
+                                return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                                '<a id="btn_edit" onclick="shwo_edit(\'' + data.surat_id + '\', \'' + data.nama_instansi + '\', \'' + data.nama_instansi2 + '\', \'' + data.no_surat + '\', \'' + data.tanggal_surat + '\', \'' + data.tanggal_masuk + '\', \'' + data.catatan + '\', \'' + data.isi_surat + '\', \'' + data.proses_surat + '\', \'' + data.file + '\');" class="fa fa-edit" style="padding-right:1rem"/>'+
+                                '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                                '<a href="/suratmasuk-delete/'+data.surat_id+'" class="fa fa-trash" style="padding-right:1rem"/>'+
+                                '</div>'
+                            }
                         }
                         else{
+                            if(data.status == "Disetujui")
+                            {
                             return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
                             '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
                             '<a onclick="downloadfile(\'' + data.file + '\')" class="fa fa-file-arrow-down" style="padding-right:1rem"/>'+
                             '</div>'
+                            }
+                            else{
+                                return '<div style="text-align: left; font-size: 12px; width: 100%; margin-left:1rem">'+
+                            '<a href="/SuratMasuk/'+data.surat_id+'" class="fa fa-magnifying-glass" style="padding-right:1rem"/>'+
+                            '</div>'
+                            }
                         }
                     }
                 }
@@ -371,7 +385,6 @@
     };
     
 
-<<<<<<< Updated upstream
     function downloadpfd()
     {
         var link = document.createElement('a');
@@ -379,28 +392,6 @@
         link.download = '1659616191311-FORM CUTI.pdf';
         link.dispatchEvent(new MouseEvent('click'));
     }
-=======
-
-        
-    $('#savetambahsurat').on('click',function(){
-        console.log($("#customFile_surat")[0].files[0])
-
-            // var formakses = $('#tambahasuratmasuk');
-            // var url = formakses.attr('action');
-            // $(this).html('please wait ... ');
-            // formakses.submit();
-    })
-
-    $('#simpan_edit').on('click',function(){
-        var surat_id = $('#f_surat_id_edit').val();
-        var formakses1 = $('#Editsuratmasuk');
-        var url = formakses1.attr('action','/Edit/'+surat_id);
-        $(this).html('please wait ... ');
-        formakses1.submit();
-        })
-
-    })
->>>>>>> Stashed changes
 
     function shwo_edit(surat_id, nama_instansi, nama_instansi2,no_surat, tanggal_surat,tanggal_masuk, catatan, isi_surat, proses )
     {
@@ -430,7 +421,7 @@
 
     function download_pdf()
     {
-        window.open("/downloadpdf/"+filename,"_BLANK");
+        window.open("/download_pdf/"+filename,"_BLANK");
     }
 
     function validasi_data()
