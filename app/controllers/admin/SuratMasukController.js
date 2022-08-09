@@ -19,9 +19,9 @@ const { response } = require('express');
 // const app = express();
 
 
-const pdf = require('pdf-creator-node');
-const options = require('../../models/options');
-const data = require('../../models/data');
+// const pdf = require('pdf-creator-node');
+// const options = require('../../models/options');
+// const data = require('../../models/data');
 
 const storage = Multer.diskStorage({
     destination:(req,file,cb)=>{

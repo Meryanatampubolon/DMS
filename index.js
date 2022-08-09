@@ -99,7 +99,6 @@ app.use((req, res, next) => {
 //         extname: 'hbs'
 //     })
 // );
-
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 

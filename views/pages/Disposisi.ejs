@@ -27,8 +27,16 @@
         </div>
     </div>
 </div>
-<!-- 
+ 
 <script>
+
+    var token = '<%= csrfToken %>'
+    var datasimpan = "";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+            }
+    });
 
     $(document).ready(function(){
         var suratdisposisi = $('#tabelsuratdisposisi').dataTable({
@@ -37,8 +45,7 @@
             "bInfo":true,
             "serverside":true,
             "ajax":{
-                
-                "url":'/datatableDisposisi',
+                "url":'/datatableView_SuratMasuk',
                 "type":"POST",
                 "dataSrc":"",
             },
@@ -148,4 +155,4 @@
             ]
         })
     })
-</script> -->
+</script>

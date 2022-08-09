@@ -371,6 +371,7 @@
     };
     
 
+<<<<<<< Updated upstream
     function downloadpfd()
     {
         var link = document.createElement('a');
@@ -378,6 +379,28 @@
         link.download = '1659616191311-FORM CUTI.pdf';
         link.dispatchEvent(new MouseEvent('click'));
     }
+=======
+
+        
+    $('#savetambahsurat').on('click',function(){
+        console.log($("#customFile_surat")[0].files[0])
+
+            // var formakses = $('#tambahasuratmasuk');
+            // var url = formakses.attr('action');
+            // $(this).html('please wait ... ');
+            // formakses.submit();
+    })
+
+    $('#simpan_edit').on('click',function(){
+        var surat_id = $('#f_surat_id_edit').val();
+        var formakses1 = $('#Editsuratmasuk');
+        var url = formakses1.attr('action','/Edit/'+surat_id);
+        $(this).html('please wait ... ');
+        formakses1.submit();
+        })
+
+    })
+>>>>>>> Stashed changes
 
     function shwo_edit(surat_id, nama_instansi, nama_instansi2,no_surat, tanggal_surat,tanggal_masuk, catatan, isi_surat, proses )
     {
