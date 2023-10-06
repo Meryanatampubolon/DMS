@@ -113,10 +113,10 @@ const dbinit = require('./db/init');
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(process.env.PORT, () => {
-    console.log('HTTP Server running on port ' + process.env.PORT);
+httpServer.listen(process.env.PORT, process.env.HOST, () => {
+    console.log('HTTP Server running at ' + process.env.HOST + ' on port ' + process.env.PORT);
 });
 
-httpsServer.listen(process.env.HTTPSPORT, () => {
-    console.log('HTTPS Server running on port ' + process.env.HTTPSPORT);
-});
+// httpsServer.listen(process.env.HTTPSPORT, () => {
+//     console.log('HTTPS Server running on port ' + process.env.HTTPSPORT);
+// });
